@@ -4,6 +4,15 @@ import * as vscode from 'vscode';
 import { Manager } from './components/manager';
 import { Commander } from './commander';
 
+
+/*
+ *TODO:
+ *- gradle commands
+ *  - build, clean, solotmatic
+ *  - parse output and show error in file
+ * 
+ */
+
 export function activate(context: vscode.ExtensionContext) {
     console.log("extention activation");
     const commander = new Commander();
