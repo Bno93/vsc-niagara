@@ -1,0 +1,72 @@
+{
+    "name": "vsc-niagara",
+    "displayName": "vsc-niagara",
+    "description": "niagara extention for visual studio",
+    "version": "0.0.1",
+    "publisher": "BNO",
+    "engines": {
+        "vscode": "^1.26.0"
+    },
+    "categories": [
+        "Extension Packs",
+        "Snippets"
+
+    ],
+    "activationEvents": [
+        "onLanguage:java",
+        "onCommand:vsc-niagara.open-console"
+        
+    ],
+    "main": "./out/extension",
+    "contributes": {
+        "snippets": [
+            {
+                "language": "java",
+                "path": "./snippets/java.json"
+            }
+        ],
+        "commands": [
+            {
+                "command": "vsc-niagara.open-console",
+                "title": "open niagara console",
+                "category": "VSC Niagara"
+            }
+        ],
+        "configuration":{
+            "type": "object",
+            "title": "Niagara Settings",
+            "properties": {
+                "vsc-niagara.niagara.home":{
+                     "type": "string",
+                     "default": "",
+                     "description": "Niagara Home"
+                },
+                "vsc-niagara.niagara.userhome":{
+                     "type": "string",
+                     "default": "",
+                     "description": "Niagara User Home"
+                },
+                "vsc-niagara.niagara.deamonhome":{
+                     "type": "string",
+                     "default": "",
+                     "description": "Niagara Deamon Home"
+                }
+            }
+        }
+    
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "npm run compile && node ./node_modules/vscode/bin/test"
+    },
+    "devDependencies": {
+        "typescript": "^2.6.1",
+        "vscode": "^1.1.6",
+        "tslint": "^5.8.0",
+        "@types/node": "^7.0.43",
+        "@types/mocha": "^2.2.42"
+    }
+}
