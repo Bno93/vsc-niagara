@@ -10,18 +10,15 @@ export class Manager {
 
   }
 
-  async findProjectRoot() : Promise<Array<Object> | undefined > {
+  async findProjectRoot() : Promise<string | undefined > {
 
     let workspaceFolders = vscode.workspace.workspaceFolders;
     if(!workspaceFolders){
       return undefined;
     }
-    let roots = [];
-    for(let obj of workspaceFolders) {
-      roots.push( {"project": obj["name"], "path": obj["uri"]["fsPath"] });
-    }
+    let rootFolder = workspaceFolders[0];
    
-    return roots;
+    return rootFolder["uri"]["fsPath"];
   }
 
 }

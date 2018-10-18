@@ -15,19 +15,28 @@ import { Commander } from './commander';
 
 export function activate(context: vscode.ExtensionContext) {
     console.log("extention activation");
-    const commander = new Commander();
     const manager = new Manager();
+    const commander = new Commander();
+
+    manager.findProjectRoot();
     
     vscode.commands.registerCommand("vsc-niagara.open-console", () =>
-      commander.openConsole()
+
+        commander.openConsole()
     );
+
+    vscode.commands.registerCommand("vsc-niagara.build", () => {
+        commander.buildNX();
+    });
+    vscode.commands.registerCommand("vsc-niagara.slotomatic", () => {
+        commander.slotomatic();
+    });
 
     context.subscriptions.push(vscode.window.onDidChangeActiveTextEditor(() => {
         console.log("activ editor has changed");
-        let roots = manager.findProjectRoot();
-
-        console.log(roots);
-        
+        manager.findProjectRoot().then((root) => {
+           console.log("found root folder: " + root);
+        });
     }));
 
 }

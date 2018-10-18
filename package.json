@@ -27,10 +27,24 @@
         ],
         "commands": [
             {
+                "command": "vsc-niagara.build",
+                "title": "build niagara project",
+                "category": "VSC Niagara"
+                
+            },
+            {
+                "command": "vsc-niagara.slotomatic",
+                "title": "run slotomatic",
+                "category": "VSC Niagara"
+                
+            },
+            {
                 "command": "vsc-niagara.open-console",
                 "title": "open niagara console",
                 "category": "VSC Niagara"
             }
+        ],
+        "keybindings": [
         ],
         "configuration":{
             "type": "object",
