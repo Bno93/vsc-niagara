@@ -2,8 +2,8 @@
     "name": "vsc-niagara",
     "displayName": "vsc-niagara",
     "description": "niagara extention for visual studio",
-    "version": "0.0.1",
-    "publisher": "BNO",
+    "version": "0.0.5",
+    "publisher": "bno",
     "engines": {
         "vscode": "^1.26.0"
     },
@@ -29,22 +29,23 @@
             {
                 "command": "vsc-niagara.build",
                 "title": "build niagara project",
-                "category": "VSC Niagara"
-                
+                "category": "Niagara"
             },
             {
                 "command": "vsc-niagara.slotomatic",
                 "title": "run slotomatic",
-                "category": "VSC Niagara"
-                
+                "category": "Niagara"
             },
             {
-                "command": "vsc-niagara.open-console",
-                "title": "open niagara console",
-                "category": "VSC Niagara"
+                "command": "vsc-niagara.clean",
+                "title": "clean project",
+                "category": "Niagara"
+            },
+            {
+                "command": "vsc-niagara.moduleTestJar",
+                "title": "build module Test jar",
+                "category": "Niagara"
             }
-        ],
-        "keybindings": [
         ],
         "configuration":{
             "type": "object",
@@ -67,7 +68,6 @@
                 }
             }
         }
-    
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",

@@ -3,33 +3,35 @@ import * as vscode from 'vscode';
 
 import { Manager } from './components/manager';
 import { Commander } from './commander';
+import { Logger } from './components/logger';
 
 
 /*
  *TODO:
  *- gradle commands
- *  - build, clean, solotmatic
  *  - parse output and show error in file
  * 
  */
 
 export function activate(context: vscode.ExtensionContext) {
-    console.log("extention activation");
+    console.log("vsc-niagara activated");
+    const logger = new Logger();
     const manager = new Manager();
-    const commander = new Commander();
+    const commander = new Commander(logger);
 
     manager.findProjectRoot();
     
-    vscode.commands.registerCommand("vsc-niagara.open-console", () =>
-
-        commander.openConsole()
-    );
-
     vscode.commands.registerCommand("vsc-niagara.build", () => {
         commander.buildNX();
     });
     vscode.commands.registerCommand("vsc-niagara.slotomatic", () => {
         commander.slotomatic();
+    });
+    vscode.commands.registerCommand("vsc-niagara.clean", () => {
+        commander.clean();
+    });
+    vscode.commands.registerCommand("vsc-niagara.moduleTestJar", () => {
+        commander.moduleTestJar();
     });
 
     context.subscriptions.push(vscode.window.onDidChangeActiveTextEditor(() => {
@@ -42,6 +44,6 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 export function deactivate() {
-    console.log("extention deactivation");
+    console.log("vsc-niagara deactivated");
     
 }
