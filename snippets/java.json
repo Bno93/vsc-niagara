@@ -24,6 +24,11 @@
     "prefix": "class",
     "description": "Class with Niagara Type",
     "body": [
+      "import javax.baja.nre.annotations.NiagaraType;",
+      "import javax.baja.sys.BComponent;",
+      "import javax.baja.sys.Sys;",
+      "import javax.baja.sys.Type;",
+      "",
       "@NiagaraType",
       "public class $TM_FILENAME_BASE extends ${2:BComponent} {",
       "\t$0",

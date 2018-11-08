@@ -2,8 +2,9 @@
     "name": "vsc-niagara",
     "displayName": "vsc-niagara",
     "description": "niagara extention for visual studio",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "publisher": "bno",
+    "icon": "icon.png",
     "engines": {
         "vscode": "^1.26.0"
     },
@@ -14,8 +15,10 @@
     ],
     "activationEvents": [
         "onLanguage:java",
-        "onCommand:vsc-niagara.open-console"
-        
+        "onCommand:vsc-niagara.build",
+        "onCommand:vsc-niagara.slotomatic",
+        "onCommand:vsc-niagara.clean",
+        "onCommand:vsc-niagara.moduleTestJar"
     ],
     "main": "./out/extension",
     "contributes": {
@@ -65,6 +68,11 @@
                      "type": "string",
                      "default": "",
                      "description": "Niagara Deamon Home"
+                },
+                "vsc-niagara.autoSave": {
+                    "type": "boolean",
+                    "default": "false",
+                    "description": "Autosave befor run command"
                 }
             }
         }

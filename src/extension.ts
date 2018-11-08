@@ -2,7 +2,7 @@
 import * as vscode from 'vscode';
 
 import { Manager } from './components/manager';
-import { Commander } from './commander';
+import { Commander } from './components/commander';
 import { Logger } from './components/logger';
 
 
@@ -10,7 +10,7 @@ import { Logger } from './components/logger';
  *TODO:
  *- gradle commands
  *  - parse output and show error in file
- * 
+ *
  */
 
 export function activate(context: vscode.ExtensionContext) {
@@ -20,7 +20,7 @@ export function activate(context: vscode.ExtensionContext) {
     const commander = new Commander(logger);
 
     manager.findProjectRoot();
-    
+
     vscode.commands.registerCommand("vsc-niagara.build", () => {
         commander.buildNX();
     });
@@ -45,5 +45,4 @@ export function activate(context: vscode.ExtensionContext) {
 
 export function deactivate() {
     console.log("vsc-niagara deactivated");
-    
 }
