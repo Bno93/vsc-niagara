@@ -11,7 +11,6 @@
     "categories": [
         "Extension Packs",
         "Snippets"
-
     ],
     "activationEvents": [
         "onLanguage:java",
@@ -50,24 +49,24 @@
                 "category": "Niagara"
             }
         ],
-        "configuration":{
+        "configuration": {
             "type": "object",
             "title": "Niagara Settings",
             "properties": {
-                "vsc-niagara.niagara.home":{
-                     "type": "string",
-                     "default": "",
-                     "description": "Niagara Home"
+                "vsc-niagara.niagara.home": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Niagara Home"
                 },
-                "vsc-niagara.niagara.userhome":{
-                     "type": "string",
-                     "default": "",
-                     "description": "Niagara User Home"
+                "vsc-niagara.niagara.userhome": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Niagara User Home"
                 },
-                "vsc-niagara.niagara.deamonhome":{
-                     "type": "string",
-                     "default": "",
-                     "description": "Niagara Deamon Home"
+                "vsc-niagara.niagara.deamonhome": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Niagara Deamon Home"
                 },
                 "vsc-niagara.autoSave": {
                     "type": "boolean",
