@@ -4,6 +4,10 @@
     "description": "niagara extention for visual studio",
     "version": "0.0.6",
     "publisher": "bno",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Bno93/vsc-nigara"
+    },
     "icon": "icon.png",
     "engines": {
         "vscode": "^1.26.0"
