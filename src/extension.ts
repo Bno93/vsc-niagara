@@ -39,6 +39,10 @@ export function activate(context: vscode.ExtensionContext) {
         manager.findProjectRoot().then((root) => {
            console.log("found root folder: " + root);
         });
+        manager.checkProjectVersion().then(() => {
+            console.log("check of Niagara Version");
+
+        });
     }));
 
 }

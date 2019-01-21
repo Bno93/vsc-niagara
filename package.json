@@ -2,7 +2,7 @@
     "name": "vsc-niagara",
     "displayName": "vsc-niagara",
     "description": "niagara extention for visual studio",
-    "version": "0.0.6",
+    "version": "0.0.8",
     "publisher": "bno",
     "repository": {
         "type": "git",
@@ -93,5 +93,8 @@
         "tslint": "^5.8.0",
         "@types/node": "^7.0.43",
         "@types/mocha": "^2.2.42"
+    },
+    "dependencies": {
+        "fs": "0.0.1-security"
     }
 }
