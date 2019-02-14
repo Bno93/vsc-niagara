@@ -10,7 +10,7 @@
     },
     "icon": "icon.png",
     "engines": {
-        "vscode": "^1.26.0"
+        "vscode": "^1.30.0"
     },
     "categories": [
         "Extension Packs",
