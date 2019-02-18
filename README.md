@@ -7,6 +7,10 @@ BETA Version
 Build Modules and Driver with vscode commands.
 use Snippets for faster Property, Action and Topic generation.
 
+### plant features
+
+* choose Niagara Environment
+
 ## Requirements
 
 1. Niagara Workbench 4.x installed
