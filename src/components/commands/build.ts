@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import { Manager } from "../manager";
 import { Logger } from "../logger";
 import { exec} from 'child_process';
+import * as path from 'path';
 
 export class Build {
 
@@ -102,7 +103,8 @@ export class Build {
 
     if(rootFolder) {
       this.logger.showSpiningStatusItem("build ...");
-      let cmd = axHome + "bin\\build.exe " + rootFolder + "build.xml full";
+      let exe = path.join(axHome, "bin\\build.exe");
+      let cmd =  exe + " " + rootFolder + "build.xml full";
       this.logger.addBuildLogMessage("build: " + cmd);
       let process = exec(cmd, {cwd: rootFolder});
 

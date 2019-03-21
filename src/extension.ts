@@ -19,7 +19,7 @@ export function activate(context: vscode.ExtensionContext) {
     const manager = new Manager();
     const commander = new Commander(logger);
 
-    const projectVersion = manager.checkProjectVersion();
+    // const projectVersion = manager.checkProjectVersion();
 
     vscode.commands.registerCommand("vsc-niagara.build", () => {
         logger.addExtensionMessage("execute build action");

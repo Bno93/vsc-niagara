@@ -57,7 +57,6 @@
             "type": "object",
             "title": "Niagara Settings",
             "properties": {
-
                 "vsc-niagara.build.nx.gradlew": {
                     "type": "boolean",
                     "default": false,
@@ -68,7 +67,7 @@
                     "default": "false",
                     "description": "Autosave befor run command"
                 },
-                "vsc-niagara.niagara.ax.home":{
+                "vsc-niagara.niagara.ax.home": {
                     "type": "string",
                     "default": "",
                     "description": "Niagara AX Home"
@@ -89,6 +88,7 @@
         "test": "npm run compile && node ./node_modules/vscode/bin/test"
     },
     "devDependencies": {
+        "node.extend": ">=1.1.7",
         "typescript": "^2.6.1",
         "vscode": "^1.1.6",
         "tslint": "^5.8.0",
@@ -96,6 +96,8 @@
         "@types/mocha": "^2.2.42"
     },
     "dependencies": {
-        "fs": "0.0.1-security"
+        "fs": "0.0.1-security",
+        "node.extend": ">=1.1.7",
+        "path": "^0.12.7"
     }
 }
