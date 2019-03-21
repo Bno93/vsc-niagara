@@ -19,10 +19,11 @@ export function activate(context: vscode.ExtensionContext) {
     const manager = new Manager();
     const commander = new Commander(logger);
 
-    manager.findProjectRoot();
+    const projectVersion = manager.checkProjectVersion();
 
     vscode.commands.registerCommand("vsc-niagara.build", () => {
-        commander.buildNX();
+        logger.addExtensionMessage("execute build action");
+        commander.build();
     });
     vscode.commands.registerCommand("vsc-niagara.slotomatic", () => {
         commander.slotomatic();

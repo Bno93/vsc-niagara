@@ -57,25 +57,26 @@
             "type": "object",
             "title": "Niagara Settings",
             "properties": {
-                "vsc-niagara.niagara.home": {
-                    "type": "string",
-                    "default": "",
-                    "description": "Niagara Home"
+
+                "vsc-niagara.build.nx.gradlew": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Use gradlew indstead of gradle itself."
                 },
-                "vsc-niagara.niagara.userhome": {
-                    "type": "string",
-                    "default": "",
-                    "description": "Niagara User Home"
-                },
-                "vsc-niagara.niagara.deamonhome": {
-                    "type": "string",
-                    "default": "",
-                    "description": "Niagara Deamon Home"
-                },
-                "vsc-niagara.autoSave": {
+                "vsc-niagara.build.autoSave": {
                     "type": "boolean",
                     "default": "false",
                     "description": "Autosave befor run command"
+                },
+                "vsc-niagara.niagara.ax.home":{
+                    "type": "string",
+                    "default": "",
+                    "description": "Niagara AX Home"
+                },
+                "vsc-niagara.niagara.nx.home": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Niagara Home"
                 }
             }
         }
