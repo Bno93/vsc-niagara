@@ -26,6 +26,10 @@ currently no used from extension.
 
 ## Release Notes
 
+### 0.0.8
+
+add Niagara AX Project Support
+
 ### 0.0.5
 
 add slotomatic, clean and moduleTestJar commands
