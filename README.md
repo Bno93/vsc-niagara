@@ -26,6 +26,10 @@ currently no used from extension.
 
 ## Release Notes
 
+### 0.0.9
+
+show time when build is finished successful in infobar
+
 ### 0.0.8
 
 add Niagara AX Project Support

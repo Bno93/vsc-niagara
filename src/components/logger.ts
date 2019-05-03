@@ -25,9 +25,13 @@ export class Logger {
     this.statusItem.show();
   }
 
-  showSuccessStatusItem(text: string) {
+  showSuccessStatusItem(text: string, time?: string) {
     this.statusItem.hide();
-    this.statusItem.text = "$(check) " + text + " successful";
+    if(time) {
+      this.statusItem.text = "$(check) " + text + " successful at " + time;
+    } else {
+      this.statusItem.text = "$(check) " + text + " successful";
+    }
     this.statusItem.show();
   }
 

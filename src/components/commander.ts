@@ -22,7 +22,7 @@ export class Commander {
   async build() {
     this.logger.addBuildLogMessage("build project");
     await this.manager.checkProjectVersion();
-    this.logger.addExtensionMessage("NX[" + this.manager.nxProject + "];AX[" + this.manager.axProject + "]");
+    this.logger.addExtensionMessage("NX[" + this.manager.nxProject + "]; AX[" + this.manager.axProject + "]");
     if(this.manager.nxProject) {
       this.builder.nx();
     }

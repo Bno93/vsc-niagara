@@ -76,8 +76,10 @@ export class Build {
         // process output
         // console.log("Out: " + stdOut);
         // console.log("Err: " + stdErr);
+        const now = new Date();
+        let build_time = now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
         if (isSuccessful) {
-          this.logger.showSuccessStatusItem("build");
+          this.logger.showSuccessStatusItem("build", build_time);
         }
         else if(!isSuccessful){
           this.logger.showFailedStatusItem("build");
@@ -139,8 +141,10 @@ export class Build {
 
       process.on('exit', (exitCode, signal) => {
 
+        const now = new Date();
+        let build_time = now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
         if (isSuccessful) {
-          this.logger.showSuccessStatusItem("build");
+          this.logger.showSuccessStatusItem("build", build_time);
         }
         else if(!isSuccessful){
           this.logger.showFailedStatusItem("build");
