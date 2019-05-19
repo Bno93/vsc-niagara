@@ -1,7 +1,17 @@
 # Change Log
-All notable changes to the "vsc-niagara" extension will be documented in this file.
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+### 0.0.9
 
-## [Unreleased]
-- Initial release
+show time when build is finished successful in infobar
+
+### 0.0.8
+
+add Niagara AX Project Support
+
+### 0.0.5
+
+add slotomatic, clean and moduleTestJar commands
+
+### 0.0.1
+
+add build command

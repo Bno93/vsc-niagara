@@ -19,10 +19,11 @@ export function activate(context: vscode.ExtensionContext) {
     const manager = new Manager();
     const commander = new Commander(logger);
 
-    manager.findProjectRoot();
+    // const projectVersion = manager.checkProjectVersion();
 
     vscode.commands.registerCommand("vsc-niagara.build", () => {
-        commander.buildNX();
+        logger.addExtensionMessage("execute build action");
+        commander.build();
     });
     vscode.commands.registerCommand("vsc-niagara.slotomatic", () => {
         commander.slotomatic();
@@ -38,6 +39,10 @@ export function activate(context: vscode.ExtensionContext) {
         console.log("activ editor has changed");
         manager.findProjectRoot().then((root) => {
            console.log("found root folder: " + root);
+        });
+        manager.checkProjectVersion().then(() => {
+            console.log("check of Niagara Version");
+
         });
     }));
 

@@ -2,7 +2,7 @@
     "name": "vsc-niagara",
     "displayName": "vsc-niagara",
     "description": "niagara extention for visual studio",
-    "version": "0.0.6",
+    "version": "0.0.9",
     "publisher": "bno",
     "repository": {
         "type": "git",
@@ -57,25 +57,25 @@
             "type": "object",
             "title": "Niagara Settings",
             "properties": {
-                "vsc-niagara.niagara.home": {
-                    "type": "string",
-                    "default": "",
-                    "description": "Niagara Home"
+                "vsc-niagara.build.nx.gradlew": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Use gradlew indstead of gradle itself."
                 },
-                "vsc-niagara.niagara.userhome": {
-                    "type": "string",
-                    "default": "",
-                    "description": "Niagara User Home"
-                },
-                "vsc-niagara.niagara.deamonhome": {
-                    "type": "string",
-                    "default": "",
-                    "description": "Niagara Deamon Home"
-                },
-                "vsc-niagara.autoSave": {
+                "vsc-niagara.build.autoSave": {
                     "type": "boolean",
                     "default": "false",
                     "description": "Autosave befor run command"
+                },
+                "vsc-niagara.niagara.ax.home": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Niagara AX Home"
+                },
+                "vsc-niagara.niagara.nx.home": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Niagara Home"
                 }
             }
         }
@@ -88,10 +88,16 @@
         "test": "npm run compile && node ./node_modules/vscode/bin/test"
     },
     "devDependencies": {
+        "node.extend": ">=1.1.7",
         "typescript": "^2.6.1",
         "vscode": "^1.1.34",
         "tslint": "^5.16.0",
         "@types/node": "^7.0.43",
         "@types/mocha": "^2.2.42"
+    },
+    "dependencies": {
+        "fs": "0.0.1-security",
+        "node.extend": ">=1.1.7",
+        "path": "^0.12.7"
     }
 }

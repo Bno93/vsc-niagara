@@ -7,9 +7,13 @@ BETA Version
 Build Modules and Driver with vscode commands.
 use Snippets for faster Property, Action and Topic generation.
 
+### plant features
+
+* choose Niagara Environment
+
 ## Requirements
 
-1. Niagara Workbench 4.x installed
+1. Niagara Workbench 4.x or 3.8.x installed
 2. Gradle installed
 
 
@@ -21,6 +25,14 @@ currently no used from extension.
 
 
 ## Release Notes
+
+### 0.0.9
+
+show time when build is finished successful in infobar
+
+### 0.0.8
+
+add Niagara AX Project Support
 
 ### 0.0.5
 
