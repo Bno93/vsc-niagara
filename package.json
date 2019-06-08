@@ -97,7 +97,7 @@
     },
     "dependencies": {
         "fs": "0.0.1-security",
-        "node.extend": ">=1.1.7",
+        "node.extend": ">=2.0.2",
         "path": "^0.12.7"
     }
 }
