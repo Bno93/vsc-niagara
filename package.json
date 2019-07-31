@@ -90,14 +90,14 @@
     "devDependencies": {
         "node.extend": ">=1.1.7",
         "typescript": "^2.6.1",
-        "vscode": "^1.1.6",
-        "tslint": "^5.8.0",
+        "vscode": "^1.1.34",
+        "tslint": "^5.16.0",
         "@types/node": "^7.0.43",
         "@types/mocha": "^2.2.42"
     },
     "dependencies": {
         "fs": "0.0.1-security",
-        "node.extend": ">=1.1.7",
+        "node.extend": ">=2.0.2",
         "path": "^0.12.7"
     }
 }
