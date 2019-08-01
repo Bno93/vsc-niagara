@@ -15,14 +15,14 @@ export class SlotomaticWrapper {
   }
 
 
-  async nx() {
+  async n4() {
     let rootFolder = await this.manager.findProjectRoot() + "\\";
     let isSuccessful = false;
     this.logger.addBuildLogMessage("run slot-o-matic ...");
     this.manager.checkIfAutoSaveIsActive();
 
     if(rootFolder) {
-      this.logger.showSpiningStatusItem("slotomatic");
+      this.logger.showSpiningStatusItem("slotomatic N4 ...");
       const cmd = "gradle slotomatic";
       console.log("execute: " + cmd + " in " + rootFolder);
       let process =exec(cmd, {cwd: rootFolder});
@@ -57,10 +57,10 @@ export class SlotomaticWrapper {
         // console.log("Out: " + stdOut);
         // console.log("Err: " + stdErr);
         if (isSuccessful) {
-          this.logger.showSuccessStatusItem("slotomatic");
+          this.logger.showSuccessStatusItem("solotmatic N4");
         }
         else if(!isSuccessful){
-          this.logger.showFailedStatusItem("slotomatic");
+          this.logger.showFailedStatusItem("solotmatic N4");
         }
       });
     }
@@ -83,7 +83,7 @@ export class SlotomaticWrapper {
     this.manager.checkIfAutoSaveIsActive();
 
     if(rootFolder) {
-      this.logger.showSpiningStatusItem("run slot-o-matic ...");
+      this.logger.showSpiningStatusItem("slotomatic AX ...");
       let exe = path.join(axHome, "bin\\slot.exe");
       let cmd =  exe + " " + rootFolder + " -mi";
       this.logger.addBuildLogMessage("build: " + cmd);
@@ -123,10 +123,10 @@ export class SlotomaticWrapper {
         const now = new Date();
         let build_time = now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
         if (isSuccessful) {
-          this.logger.showSuccessStatusItem("build", build_time);
+          this.logger.showSuccessStatusItem("solotmatic AX", build_time);
         }
         else if(!isSuccessful){
-          this.logger.showFailedStatusItem("build");
+          this.logger.showFailedStatusItem("solotmatic AX");
         }
       });
 

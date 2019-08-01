@@ -14,7 +14,7 @@ export class Build {
     this.manager = manager;
   }
 
-  async nx() {
+  async n4() {
     this.logger.addBuildLogMessage("build N4 Project");
     let rootFolder = await this.manager.findProjectRoot() + "\\";
     let isSuccessful = false;
@@ -25,7 +25,7 @@ export class Build {
     const useGradleW = configuration.get("build.nx.gradlew") as boolean;
 
     if(rootFolder) {
-      this.logger.showSpiningStatusItem("build ...");
+      this.logger.showSpiningStatusItem("build N4 ...");
       let cmd = "";
       if (useGradleW) {
         cmd = "gradlew.bat build";
@@ -104,7 +104,7 @@ export class Build {
     this.manager.checkIfAutoSaveIsActive();
 
     if(rootFolder) {
-      this.logger.showSpiningStatusItem("build ...");
+      this.logger.showSpiningStatusItem("build AX ...");
       let exe = path.join(axHome, "bin\\build.exe");
       let cmd =  exe + " " + rootFolder + "build.xml full";
       this.logger.addBuildLogMessage("build: " + cmd);

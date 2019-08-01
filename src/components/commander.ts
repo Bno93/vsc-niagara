@@ -26,7 +26,7 @@ export class Commander {
     await this.manager.checkProjectVersion();
     this.logger.addExtensionMessage("N4[" + this.manager.nxProject + "]; AX[" + this.manager.axProject + "]");
     if(this.manager.nxProject) {
-      this.builder.nx();
+      this.builder.n4();
     }
     else if(this.manager.axProject) {
       this.builder.ax();
@@ -41,7 +41,7 @@ export class Commander {
     await this.manager.checkProjectVersion();
     this.logger.addExtensionMessage("N4[" + this.manager.nxProject + "]; AX[" + this.manager.axProject + "]");
     if(this.manager.nxProject) {
-      this.slotomaticWrapper.nx();
+      this.slotomaticWrapper.n4();
     }
     else if(this.manager.axProject) {
       this.slotomaticWrapper.ax();
