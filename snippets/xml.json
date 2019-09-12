@@ -1,0 +1,6 @@
+{
+    "type": {
+        "prefix": "type",
+        "body": "<type name=\"${1:name}\" class=\"${2:class} />"
+    }
+}
