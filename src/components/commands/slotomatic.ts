@@ -85,7 +85,7 @@ export class SlotomaticWrapper {
     if(rootFolder) {
       this.logger.showSpiningStatusItem("slotomatic AX ...");
       let exe = path.join(axHome, "bin\\slot.exe");
-      let cmd =  exe + " " + rootFolder + " -mi";
+      let cmd =  exe + " -mi " + rootFolder;
       this.logger.addBuildLogMessage("build: " + cmd);
       let process = exec(cmd, {cwd: rootFolder});
 
