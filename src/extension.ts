@@ -15,7 +15,7 @@ import { Logger } from './components/logger';
 
 export function activate(context: vscode.ExtensionContext) {
     console.log("vsc-niagara activated");
-    const logger = new Logger();
+    const logger = new Logger(context);
     const manager = new Manager();
     const commander = new Commander(logger);
 

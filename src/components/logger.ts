@@ -4,12 +4,14 @@ export class Logger {
   buildLogPanel: vscode.OutputChannel;
   extLogPanel: vscode.OutputChannel;
   statusItem: vscode.StatusBarItem;
+  subscriptions: vscode.ExtensionContext['subscriptions'];
 
 
-  constructor() {
-   this.buildLogPanel = vscode.window.createOutputChannel("Niagara Build");
-   this.extLogPanel = vscode.window.createOutputChannel("Niagara Ext");
-   this.statusItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left);
+  constructor(context: vscode.ExtensionContext) {
+    this.buildLogPanel = vscode.window.createOutputChannel("Niagara Build");
+    this.extLogPanel = vscode.window.createOutputChannel("Niagara Ext");
+    this.statusItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left);
+    this.subscriptions = context["subscriptions"];
   }
 
   addExtensionMessage(message: string) {
@@ -38,6 +40,11 @@ export class Logger {
   showFailedStatusItem(text: string) {
     this.statusItem.hide();
     this.statusItem.text = "$(x) " + text + " failed";
+
+    this.subscriptions.push(vscode.commands.registerCommand("vsc-niagara.showStatusItemAction", () => {
+      this.buildLogPanel.show();
+    }));
+
     this.statusItem.show();
   }
 
@@ -45,4 +52,6 @@ export class Logger {
     this.statusItem.text = "error...";
     this.statusItem.show();
   }
+
+
 }
