@@ -24,6 +24,7 @@ export class Logger {
 
   showSpiningStatusItem(text: string) {
     this.statusItem.text = "$(sync~spin) " + text;
+    this.statusItem.command = "vsc-niagara.openBuildPanel"
     this.statusItem.show();
   }
 
@@ -34,6 +35,7 @@ export class Logger {
     } else {
       this.statusItem.text = "$(check) " + text + " successful";
     }
+    this.statusItem.command = "vsc-niagara.checkEnvironment"
     this.statusItem.show();
   }
 

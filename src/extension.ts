@@ -35,6 +35,10 @@ export function activate(context: vscode.ExtensionContext) {
         commander.moduleTestJar();
     });
 
+    vscode.commands.registerCommand("vsc-niagara.openBuildPanel", () => {
+        logger.buildLogPanel.show();
+    });
+
     context.subscriptions.push(vscode.window.onDidChangeActiveTextEditor(() => {
         console.log("activ editor has changed");
         manager.findProjectRoot().then((root) => {
