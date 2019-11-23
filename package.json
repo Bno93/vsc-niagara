@@ -80,6 +80,11 @@
                     "type": "string",
                     "default": "",
                     "description": "Niagara Home"
+                },
+                "vsc-niagara.environment": {
+                    "type": "string",
+                    "default": "",
+                    "description": "path the niagara environment to build the project"
                 }
             }
         }

@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import * as fs from "fs";
 
+
 export class Manager {
   axProject: boolean;
   nxProject: boolean;
@@ -12,41 +13,49 @@ export class Manager {
   }
 
   async findProjectRoot() : Promise<string | undefined > {
-
-    let workspaceFolders = vscode.workspace.workspaceFolders;
-    if(!workspaceFolders){
-      return undefined;
-    }
-    let rootFolder = workspaceFolders[0];
-
-    return rootFolder["uri"]["fsPath"];
+    return new Promise((resolve, reject) => {
+      let workspaceFolders = vscode.workspace.workspaceFolders;
+      if(workspaceFolders){
+        let rootFolder = workspaceFolders[0];
+        resolve(rootFolder["uri"]["fsPath"]);
+      }
+      else {
+        reject(undefined);
+      }
+    });
   }
 
 
 
   async checkProjectVersion() : Promise<string | undefined> {
-    let rootFolder = await this.findProjectRoot();
-    let projectVersion = "";
-    if(rootFolder) {
+    return new Promise((reslove, reject) => {
+      this.findProjectRoot().then((rootFolder) => {
+        if(rootFolder) {
 
-      fs.readdirSync(rootFolder).forEach(file => {
-        if(file === 'build.gradle') {
-          console.log("NX Project");
-          this.nxProject = true;
-          this.axProject = false;
-        }
+          fs.readdirSync(rootFolder).forEach(file => {
+            if(file === 'build.gradle') {
+              console.log("NX Project");
+              this.nxProject = true;
+              this.axProject = false;
 
-        else if(file === 'build.xml') {
-          console.log("AX Project");
-          this.nxProject = false;
-          this.axProject = true;
+              reslove("4");
+
+            }
+
+            else if(file === 'build.xml') {
+              console.log("AX Project");
+              this.nxProject = false;
+              this.axProject = true;
+              reslove("3");
+
+            }
+          });
+        } else {
+          console.log("rootfolder is undefined");
+          reject(undefined);
         }
       });
-    } else {
-      console.log("rootfolder is undefined");
-    }
-
-    return projectVersion;
+      });
   }
 
 

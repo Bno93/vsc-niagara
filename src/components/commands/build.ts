@@ -15,7 +15,6 @@ export class Build {
   }
 
   async n4() {
-    this.logger.addBuildLogMessage("build N4 Project");
     let rootFolder = await this.manager.findProjectRoot() + "\\";
     let isSuccessful = false;
     this.logger.addBuildLogMessage("build Project ...");

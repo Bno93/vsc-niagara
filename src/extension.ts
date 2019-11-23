@@ -4,12 +4,15 @@ import * as vscode from 'vscode';
 import { Manager } from './components/manager';
 import { Commander } from './components/commander';
 import { Logger } from './components/logger';
+import { EnvStatusItem } from './components/envStatusItem';
+import { Project } from './components/project';
 
 
 /*
- *TODO:
- *- gradle commands
- *  - parse output and show error in file
+ * TODO:
+ * - change environment via property
+ * - gradle commands
+ *   - parse output and show error in file
  *
  */
 
@@ -18,8 +21,20 @@ export function activate(context: vscode.ExtensionContext) {
     const logger = new Logger(context);
     const manager = new Manager();
     const commander = new Commander(logger);
+    const environemnt = new EnvStatusItem();
 
-    // const projectVersion = manager.checkProjectVersion();
+    const project = new Project(context);
+
+    manager.checkProjectVersion().then((version) => {
+        if (version) {
+            project.version = version;
+            environemnt.updateItem(project);
+        }
+        else {
+            console.log("couldn't fond version [" + version + "]" );
+        }
+    });
+
 
     vscode.commands.registerCommand("vsc-niagara.build", () => {
         logger.addExtensionMessage("execute build action");
@@ -49,6 +64,8 @@ export function activate(context: vscode.ExtensionContext) {
 
         });
     }));
+
+
 
 }
 
