@@ -34,7 +34,7 @@ export class Manager {
 
           fs.readdirSync(rootFolder).forEach(file => {
             if(file === 'build.gradle') {
-              console.log("NX Project");
+              console.log("N4 project detected");
               this.nxProject = true;
               this.axProject = false;
 
@@ -43,7 +43,7 @@ export class Manager {
             }
 
             else if(file === 'build.xml') {
-              console.log("AX Project");
+              console.log("N3 project detected");
               this.nxProject = false;
               this.axProject = true;
               reslove("3");

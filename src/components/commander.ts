@@ -4,21 +4,24 @@ import { Manager } from './manager';
 import { Logger } from './logger';
 import { Build } from './commands/build';
 import { SlotomaticWrapper } from "./commands/slotomatic";
+import { Project } from './project';
 
 
 export class Commander {
-  logger: Logger;
-  manager: Manager;
-  builder: Build;
-  slotomaticWrapper: SlotomaticWrapper;
+  logger : Logger;
+  manager : Manager;
+  builder : Build;
+  slotomaticWrapper : SlotomaticWrapper;
+  project : Project;
 
 
 
-  constructor(logger: Logger) {
+  constructor(logger : Logger, project : Project) {
     this.logger = logger;
     this.manager = new Manager();
     this.builder = new Build(this.logger, this.manager);
     this.slotomaticWrapper = new SlotomaticWrapper(this.logger, this.manager);
+    this.project = project;
   }
 
 
