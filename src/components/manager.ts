@@ -13,7 +13,7 @@ export class Manager {
   }
 
   async findProjectRoot() : Promise<string | undefined > {
-    return new Promise((resolve, reject) => {
+    return new Promise<string | undefined>((resolve, reject) => {
       let workspaceFolders = vscode.workspace.workspaceFolders;
       if(workspaceFolders){
         let rootFolder = workspaceFolders[0];
@@ -28,7 +28,7 @@ export class Manager {
 
 
   async checkProjectVersion() : Promise<string | undefined> {
-    return new Promise((reslove, reject) => {
+    return new Promise<string | undefined>((reslove, reject) => {
       this.findProjectRoot().then((rootFolder) => {
         if(rootFolder) {
 
@@ -55,7 +55,7 @@ export class Manager {
           reject(undefined);
         }
       });
-      });
+    });
   }
 
 

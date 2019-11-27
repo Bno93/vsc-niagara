@@ -26,32 +26,36 @@ export class Commander {
 
 
   async build() {
-    await this.manager.checkProjectVersion();
-    this.logger.addExtensionMessage("N4[" + this.manager.nxProject + "]; AX[" + this.manager.axProject + "]");
-    if(this.manager.nxProject) {
-      this.builder.n4();
-    }
-    else if(this.manager.axProject) {
-      this.builder.ax();
-    }
-    else {
-      this.logger.addBuildLogMessage("fail to build is NX[" + this.manager.nxProject + "] or is AX[" + this.manager.axProject + "]");
-    }
+    this.manager.checkProjectVersion().then((projVersion) => {
+      this.logger.addExtensionMessage("build as a N "+ projVersion);
+      if(this.manager.nxProject) {
+        this.builder.n4();
+      }
+      else if(this.manager.axProject) {
+        this.builder.ax();
+      }
+      else {
+        this.logger.addBuildLogMessage("fail to build is ether no N3 or N4 project");
+      }
+    });
   }
 
 
   async slotomatic() {
-    await this.manager.checkProjectVersion();
-    this.logger.addExtensionMessage("N4[" + this.manager.nxProject + "]; AX[" + this.manager.axProject + "]");
-    if(this.manager.nxProject) {
-      this.slotomaticWrapper.n4();
-    }
-    else if(this.manager.axProject) {
-      this.slotomaticWrapper.ax();
-    }
-    else {
-      this.logger.addBuildLogMessage("fail to build is NX[" + this.manager.nxProject + "] or is AX[" + this.manager.axProject + "]");
-    }
+    this.manager.checkProjectVersion().then((projVersion) => {
+
+
+      this.logger.addExtensionMessage("build as a N "+ projVersion);
+      if(this.manager.nxProject) {
+        this.slotomaticWrapper.n4();
+      }
+      else if(this.manager.axProject) {
+        this.slotomaticWrapper.ax();
+      }
+      else {
+        this.logger.addBuildLogMessage("fail to build is ether no N3 or N4 project");
+      }
+    });
   }
 
     async clean() {
