@@ -19,11 +19,12 @@
     "body": "@NiagaraAction(name=\"${1:Name}\")",
     "description": "insert a simple Niagara Action"
   },
-  
+
   "niagara class": {
     "prefix": "class",
     "description": "Class with Niagara Type",
     "body": [
+      "package ;",
       "import javax.baja.nre.annotations.NiagaraType;",
       "import javax.baja.sys.BComponent;",
       "import javax.baja.sys.Sys;",
@@ -31,6 +32,32 @@
       "",
       "@NiagaraType",
       "public class $TM_FILENAME_BASE extends ${2:BComponent} {",
+      "\t$0",
+      "}"
+    ]
+  },
+
+  "niagara fozen enum": {
+    "prefix": "enum",
+    "description": "Class with Niagara Type",
+    "body": [
+      "package ;",
+      "import javax.baja.nre.annotations.NiagaraEnum;",
+      "import javax.baja.nre.annotations.NiagaraType;",
+      "import javax.baja.nre.annotations.Range;",
+      "import javax.baja.sys.BFrozenEnum;",
+      "import javax.baja.sys.Sys;",
+      "import javax.baja.sys.Type;",
+      "",
+      "@NiagaraEnum(",
+      "\trange = {",
+      "\t\t@Range(value=$3)",
+      "",
+      "\t}",
+      ")",
+      "",
+      "@NiagaraType",
+      "public final class $TM_FILENAME_BASE extends ${2:BFrozenEnum} {",
       "\t$0",
       "}"
     ]
