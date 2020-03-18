@@ -67,7 +67,7 @@ export class Commander {
       if(rootFolder) {
         this.logger.showSpiningStatusItem("clean...");
         const cmd = "gradle clean";
-        console.log("execute: " + cmd + " in " + rootFolder);
+        this.logger.addExtensionMessage("execute: " + cmd + " in " + rootFolder);
         let process =exec(cmd, {cwd: rootFolder});
         process.stdout.on('data', newStdOut => {
 

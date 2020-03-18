@@ -85,6 +85,11 @@
                     "type": "string",
                     "default": "",
                     "description": "path the niagara environment to build the project"
+                },
+                "vsc-niagara.log.trace":{
+                    "type": "boolean",
+                    "default": "false",
+                    "description": "enable more log output for better debuging"
                 }
             }
         }

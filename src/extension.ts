@@ -18,13 +18,13 @@ import { Project } from './components/project';
  */
 
 export function activate(context: ExtensionContext) {
-    console.log("vsc-niagara activated");
     const logger = new Logger(context);
     const project = new Project(context);
     const manager = new Manager();
     const commander = new Commander(logger, project);
     const environemnt = new EnvStatusItem();
 
+    logger.addExtensionMessage("vsc-niagara activated");
 
     manager.checkProjectVersion().then((version) => {
         if (version) {
@@ -32,7 +32,7 @@ export function activate(context: ExtensionContext) {
             environemnt.updateItem(project);
         }
         else {
-            console.log("couldn't fond version [" + version + "]" );
+            logger.addExtensionMessage("couldn't fond version [" + version + "]" );
         }
     });
 
@@ -59,7 +59,7 @@ export function activate(context: ExtensionContext) {
         const envQuickPick = window.createQuickPick();
         const basedir = "C:\\Niagara\\";
         fs.readdirSync(basedir).forEach(folder => {
-            console.log(folder);
+            logger.addExtensionMessage(folder);
             envQuickPick.items = envQuickPick.items.concat(new EnvPickItem(folder, basedir + folder))
         });
 
@@ -70,12 +70,12 @@ export function activate(context: ExtensionContext) {
     });
 
     context.subscriptions.push(window.onDidChangeActiveTextEditor(() => {
-        console.log("activ editor has changed");
+        logger.addExtensionMessage("activ editor has changed");
         manager.findProjectRoot().then((root) => {
-           console.log("found root folder: " + root);
+           logger.addExtensionMessage("found root folder: " + root);
         });
         manager.checkProjectVersion().then(() => {
-            console.log("check of Niagara Version");
+            logger.addExtensionMessage("check of Niagara Version");
 
         });
     }));

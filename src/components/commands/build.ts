@@ -27,13 +27,14 @@ export class Build {
       this.logger.showSpiningStatusItem("build N4 ...");
       let cmd = "";
       if (useGradleW) {
-        cmd = "gradlew.bat build";
+        cmd = "gradlew build";
 
       } else {
         cmd = "gradle build";
       }
 
-      console.log("execute: " + cmd + " in " + rootFolder);
+
+      this.logger.addBuildLogMessage("execute: " + cmd + " in " + rootFolder);
       let process = exec(cmd, {cwd: rootFolder});
 
       process.stdout.on('data', newStdOut => {
