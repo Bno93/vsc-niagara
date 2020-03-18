@@ -21,9 +21,19 @@ export class SlotomaticWrapper {
     this.logger.addBuildLogMessage("run slot-o-matic ...");
     this.manager.checkIfAutoSaveIsActive();
 
+    const configuration = vscode.workspace.getConfiguration("vsc-niagara");
+    const useGradleW = configuration.get("build.nx.gradlew") as boolean;
+
     if(rootFolder) {
       this.logger.showSpiningStatusItem("slotomatic N4 ...");
-      const cmd = "gradle slotomatic";
+
+      let cmd = "";
+      if (useGradleW) {
+        cmd = "gradlew slotomatic";
+      }
+      else {
+        cmd = "gradle slotomatic";
+      }
       console.log("execute: " + cmd + " in " + rootFolder);
       let process =exec(cmd, {cwd: rootFolder});
       process.stdout.on('data', newStdOut => {
