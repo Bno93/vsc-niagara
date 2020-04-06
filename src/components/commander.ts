@@ -65,47 +65,60 @@ export class Commander {
       this.manager.checkIfAutoSaveIsActive();
 
       if(rootFolder) {
+
         this.logger.showSpiningStatusItem("clean...");
         const cmd = "gradle clean";
         this.logger.addExtensionMessage("execute: " + cmd + " in " + rootFolder);
-        let process =exec(cmd, {cwd: rootFolder});
-        process.stdout.on('data', newStdOut => {
+        let process = exec(cmd, {cwd: rootFolder});
 
-          let trimmedData = newStdOut.toString().trim();
-          if(trimmedData.length !== 0) {
-            if (trimmedData.match('.*BUILD SUCCESSFUL.*')) {
-              isSuccessful = true;
+        if (process) {
+
+
+          if (process.stdout) {
+              process.stdout.on('data', newStdOut => {
+
+                let trimmedData = newStdOut.toString().trim();
+              if(trimmedData.length !== 0) {
+                if (trimmedData.match('.*BUILD SUCCESSFUL.*')) {
+                  isSuccessful = true;
+                }
+              }
+              console.log("seperated Line: " + trimmedData);
+              // stdOut += line + "\n";
+              console.log("clean out: " + trimmedData);
+              this.logger.addBuildLogMessage(trimmedData);
+
+            });
+          }
+
+          if (process.stderr) {
+
+
+            process.stderr.on('data', newStdErr => {
+              console.log("clean err: " + newStdErr.toString());
+              // stdErr += newStdErr;
+              this.logger.addBuildLogMessage(newStdErr.toString());
+            });
+
+            process.on('error', err => {
+              this.logger.addExtensionMessage("clean command failed: " + err.message);
+              vscode.window.showErrorMessage("root folder not found");
+            });
+
+          }
+          process.on('exit', (exitCode, signal) => {
+            // process output
+            // console.log("Out: " + stdOut);
+            // console.log("Err: " + stdErr);
+            if (isSuccessful) {
+              this.logger.showSuccessStatusItem("clean");
             }
-          }
-          console.log("seperated Line: " + trimmedData);
-          // stdOut += line + "\n";
-          console.log("clean out: " + trimmedData);
-          this.logger.addBuildLogMessage(trimmedData);
+            else if(!isSuccessful){
+              this.logger.showFailedStatusItem("clean");
+            }
+          });
+        }
 
-        });
-
-        process.stderr.on('data', newStdErr => {
-          console.log("clean err: " + newStdErr.toString());
-          // stdErr += newStdErr;
-          this.logger.addBuildLogMessage(newStdErr.toString());
-        });
-
-        process.on('error', err => {
-          this.logger.addExtensionMessage("clean command failed: " + err.message);
-          vscode.window.showErrorMessage("root folder not found");
-        });
-
-        process.on('exit', (exitCode, signal) => {
-          // process output
-          // console.log("Out: " + stdOut);
-          // console.log("Err: " + stdErr);
-          if (isSuccessful) {
-            this.logger.showSuccessStatusItem("clean");
-          }
-          else if(!isSuccessful){
-            this.logger.showFailedStatusItem("clean");
-          }
-        });
       }
       else{
         this.logger.addBuildLogMessage("root folder not found");
@@ -127,44 +140,53 @@ export class Commander {
       this.logger.showSpiningStatusItem("build TestJar...");
       const cmd = "gradle moduleTestJar";
       console.log("execute: " + cmd + " in " + rootFolder);
-      let process =exec(cmd, {cwd: rootFolder});
-      process.stdout.on('data', newStdOut => {
+      let process = exec(cmd, {cwd: rootFolder});
 
-        let trimmedData = newStdOut.toString().trim();
-        if(trimmedData.length !== 0) {
-          if (trimmedData.match('.*BUILD SUCCESSFUL.*')) {
-            isSuccessful = true;
+      if (process) {
+
+        if (process.stdout) {
+          process.stdout.on('data', newStdOut => {
+
+            let trimmedData = newStdOut.toString().trim();
+            if(trimmedData.length !== 0) {
+              if (trimmedData.match('.*BUILD SUCCESSFUL.*')) {
+                isSuccessful = true;
+              }
+            }
+            console.log("seperated Line: " + trimmedData);
+            // stdOut += line + "\n";
+            console.log("build TestJar out: " + trimmedData);
+            this.logger.addBuildLogMessage(trimmedData);
+
+          });
+        }
+
+        if (process.stderr) {
+          process.stderr.on('data', newStdErr => {
+            console.log("build TestJar err: " + newStdErr.toString());
+            // stdErr += newStdErr;
+            this.logger.addBuildLogMessage(newStdErr.toString());
+          });
+        }
+
+        process.on('error', err => {
+          this.logger.addExtensionMessage("build TestJar command failed: " + err.message);
+          vscode.window.showErrorMessage("root folder not found");
+        });
+
+        process.on('exit', (exitCode, signal) => {
+          // process output
+          // console.log("Out: " + stdOut);
+          // console.log("Err: " + stdErr);
+          if (isSuccessful) {
+            this.logger.showSuccessStatusItem("build TestJar");
           }
-        }
-        console.log("seperated Line: " + trimmedData);
-        // stdOut += line + "\n";
-        console.log("build TestJar out: " + trimmedData);
-        this.logger.addBuildLogMessage(trimmedData);
+          else if(!isSuccessful){
+            this.logger.showFailedStatusItem("build TestJar");
+          }
+        });
+      }
 
-      });
-
-      process.stderr.on('data', newStdErr => {
-        console.log("build TestJar err: " + newStdErr.toString());
-        // stdErr += newStdErr;
-        this.logger.addBuildLogMessage(newStdErr.toString());
-      });
-
-      process.on('error', err => {
-        this.logger.addExtensionMessage("build TestJar command failed: " + err.message);
-        vscode.window.showErrorMessage("root folder not found");
-      });
-
-      process.on('exit', (exitCode, signal) => {
-        // process output
-        // console.log("Out: " + stdOut);
-        // console.log("Err: " + stdErr);
-        if (isSuccessful) {
-          this.logger.showSuccessStatusItem("build TestJar");
-        }
-        else if(!isSuccessful){
-          this.logger.showFailedStatusItem("build TestJar");
-        }
-      });
     }
     else{
       this.logger.addBuildLogMessage("root folder not found");

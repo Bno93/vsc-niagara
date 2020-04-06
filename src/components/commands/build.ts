@@ -37,54 +37,63 @@ export class Build {
       this.logger.addBuildLogMessage("execute: " + cmd + " in " + rootFolder);
       let process = exec(cmd, {cwd: rootFolder});
 
-      process.stdout.on('data', newStdOut => {
+      if (process)  {
 
-        let trimmedData = newStdOut.toString().trim();
-        if (trimmedData !== "" || trimmedData) {
-          if (trimmedData.match('.*BUILD SUCCESSFUL.*')) {
-            isSuccessful = true;
-          }
-          let match = /\r|\n/.exec(trimmedData);
-          if (match) {
-            let multLineData = trimmedData.split("\n");
-            multLineData.forEach(data => {
-              if (data !== "" || data) {
-                this.logger.addBuildLogMessage(data);
+        if (process.stdout) {
+          process.stdout.on('data', newStdOut => {
+
+            let trimmedData = newStdOut.toString().trim();
+            if (trimmedData !== "" || trimmedData) {
+              if (trimmedData.match('.*BUILD SUCCESSFUL.*')) {
+                isSuccessful = true;
               }
-            });
-          }else {
-            this.logger.addBuildLogMessage(trimmedData);
+              let match = /\r|\n/.exec(trimmedData);
+              if (match) {
+                let multLineData = trimmedData.split("\n");
+                multLineData.forEach((data: string) => {
+                  if (data !== "" || data) {
+                    this.logger.addBuildLogMessage(data);
+                  }
+                });
+              }else {
+                this.logger.addBuildLogMessage(trimmedData);
+              }
+
+            }
+
+          });
+        }
+
+        if (process.stderr) {
+          // let stdErr = '';
+          process.stderr.on('data', newStdErr => {
+            console.log("build err: " + newStdErr.toString());
+            // stdErr += newStdErr;
+            this.logger.addBuildLogMessage(newStdErr.toString());
+          });
+
+          process.on('error', err => {
+            this.logger.addExtensionMessage("build command failed: " + err.message);
+            vscode.window.showErrorMessage("root folder not found");
+          });
+        }
+
+        process.on('exit', (exitCode, signal) => {
+          // process output
+          // console.log("Out: " + stdOut);
+          // console.log("Err: " + stdErr);
+          const now = new Date();
+          let build_time = now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
+          if (isSuccessful) {
+            this.logger.showSuccessStatusItem("build", build_time);
           }
+          else if(!isSuccessful){
+            this.logger.showFailedStatusItem("build");
+          }
+        });
 
-        }
+      }
 
-      });
-      // let stdErr = '';
-      process.stderr.on('data', newStdErr => {
-        console.log("build err: " + newStdErr.toString());
-        // stdErr += newStdErr;
-        this.logger.addBuildLogMessage(newStdErr.toString());
-      });
-
-      process.on('error', err => {
-        this.logger.addExtensionMessage("build command failed: " + err.message);
-        vscode.window.showErrorMessage("root folder not found");
-      });
-
-
-      process.on('exit', (exitCode, signal) => {
-        // process output
-        // console.log("Out: " + stdOut);
-        // console.log("Err: " + stdErr);
-        const now = new Date();
-        let build_time = now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
-        if (isSuccessful) {
-          this.logger.showSuccessStatusItem("build", build_time);
-        }
-        else if(!isSuccessful){
-          this.logger.showFailedStatusItem("build");
-        }
-      });
     }
     else{
       this.logger.addBuildLogMessage("root folder not found");
@@ -110,48 +119,56 @@ export class Build {
       this.logger.addBuildLogMessage("build: " + cmd);
       let process = exec(cmd, {cwd: rootFolder});
 
-      process.stdout.on('data', newStdOut => {
+      if (process) {
 
-        let trimmedData = newStdOut.toString().trim();
-        if (trimmedData.length !== 0) {
-          if (trimmedData.match('.*Success!.*')) {
-            isSuccessful = true;
+        if (process.stdout) {
+          process.stdout.on('data', newStdOut => {
+
+            let trimmedData = newStdOut.toString().trim();
+            if (trimmedData.length !== 0) {
+              if (trimmedData.match('.*Success!.*')) {
+                isSuccessful = true;
+              }
+
+              console.log("seperated Line: " + trimmedData);
+              // stdOut += line + "\n";
+              console.log("build out: " + trimmedData);
+              this.logger.addBuildLogMessage(trimmedData);
+
+            }
+
+          });
+        }
+
+        if (process.stderr) {
+          // let stdErr = '';
+          process.stderr.on('data', newStdErr => {
+            console.log("build err: " + newStdErr.toString());
+            // stdErr += newStdErr;
+            this.logger.addBuildLogMessage(newStdErr.toString());
+          });
+
+          process.on('error', err => {
+            this.logger.addExtensionMessage("build command failed: " + err.message);
+            vscode.window.showErrorMessage("root folder not found");
+          });
+        }
+
+
+        process.on('exit', (exitCode, signal) => {
+
+          const now = new Date();
+          let build_time = now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
+          if (isSuccessful) {
+            this.logger.showSuccessStatusItem("build", build_time);
           }
+          else if(!isSuccessful){
+            this.logger.showFailedStatusItem("build");
+          }
+        });
 
-          console.log("seperated Line: " + trimmedData);
-          // stdOut += line + "\n";
-          console.log("build out: " + trimmedData);
-          this.logger.addBuildLogMessage(trimmedData);
-
-        }
-
-      });
-      // let stdErr = '';
-      process.stderr.on('data', newStdErr => {
-        console.log("build err: " + newStdErr.toString());
-        // stdErr += newStdErr;
-        this.logger.addBuildLogMessage(newStdErr.toString());
-      });
-
-      process.on('error', err => {
-        this.logger.addExtensionMessage("build command failed: " + err.message);
-        vscode.window.showErrorMessage("root folder not found");
-      });
-
-
-      process.on('exit', (exitCode, signal) => {
-
-        const now = new Date();
-        let build_time = now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
-        if (isSuccessful) {
-          this.logger.showSuccessStatusItem("build", build_time);
-        }
-        else if(!isSuccessful){
-          this.logger.showFailedStatusItem("build");
-        }
-      });
-
-    } else{
+      }
+    } else {
       this.logger.addBuildLogMessage("root folder not found");
       this.logger.showErrorStatusItem();
       vscode.window.showErrorMessage("root folder not found");
