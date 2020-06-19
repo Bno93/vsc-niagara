@@ -11,8 +11,8 @@ export class Project {
     environment : Environment;
     root : string;
 
-    constructor(context: ExtensionContext) {
-        this.logger = new Logger(context);
+    constructor(context: ExtensionContext, logger: Logger) {
+        this.logger = logger;
 
         this.version = "";
         this.root = "";
