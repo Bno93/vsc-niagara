@@ -18,7 +18,7 @@ import { Project } from './components/project';
  */
 
 export function activate(context: ExtensionContext) {
-    const logger = new Logger(context);
+    const logger = Logger.getInstance(context);
     const project = new Project(context, logger);
     const manager = new Manager();
     const commander = new Commander(logger, project);

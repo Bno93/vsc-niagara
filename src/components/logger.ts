@@ -1,17 +1,25 @@
 import * as vscode from "vscode";
 
 export class Logger {
+  private static instance: Logger;
   buildLogPanel: vscode.OutputChannel;
   extLogPanel: vscode.OutputChannel;
   statusItem: vscode.StatusBarItem;
   subscriptions: vscode.ExtensionContext['subscriptions'];
 
 
-  constructor(context: vscode.ExtensionContext) {
+  private constructor(context: vscode.ExtensionContext) {
     this.buildLogPanel = vscode.window.createOutputChannel("Niagara Build");
     this.extLogPanel = vscode.window.createOutputChannel("Niagara Ext");
     this.statusItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left);
     this.subscriptions = context["subscriptions"];
+  }
+
+  static getInstance(context: vscode.ExtensionContext): Logger {
+    if (!Logger.instance) {
+      Logger.instance = new Logger(context);
+    }
+    return Logger.instance;
   }
 
   addExtensionMessage(message: string) {
