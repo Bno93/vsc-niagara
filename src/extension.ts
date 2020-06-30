@@ -1,5 +1,5 @@
 'use strict';
-import {ExtensionContext, commands, window, QuickPickItem} from 'vscode';
+import {ExtensionContext, commands, tasks, window, QuickPickItem, Disposable} from 'vscode';
 
 import * as fs from 'fs';
 import { Manager } from './components/manager';
@@ -7,6 +7,7 @@ import { Commander } from './components/commander';
 import { Logger } from './components/logger';
 import { EnvStatusItem } from './components/envStatusItem';
 import { Project } from './components/project';
+import { BuildTaskProvider } from './providers/task/build';
 
 
 /*
@@ -16,6 +17,8 @@ import { Project } from './components/project';
  *   - parse output and show error in file
  *
  */
+
+ let buildTaskProvider: Disposable | undefined;
 
 export function activate(context: ExtensionContext) {
     const logger = Logger.getInstance(context);
@@ -63,11 +66,11 @@ export function activate(context: ExtensionContext) {
             envQuickPick.items = envQuickPick.items.concat(new EnvPickItem(folder, basedir + folder))
         });
 
-
-
-
         envQuickPick.show();
     });
+
+
+    buildTaskProvider = tasks.registerTaskProvider(BuildTaskProvider.BuildType, new BuildTaskProvider());
 
     context.subscriptions.push(window.onDidChangeActiveTextEditor(() => {
         logger.addExtensionMessage("activ editor has changed");
@@ -86,6 +89,10 @@ export function activate(context: ExtensionContext) {
 
 export function deactivate() {
     console.log("vsc-niagara deactivated");
+
+    if (buildTaskProvider) {
+        buildTaskProvider.dispose();
+    }
 }
 
 

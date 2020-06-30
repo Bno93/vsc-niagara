@@ -57,6 +57,20 @@
                 "category": "Niagara"
             }
         ],
+        "taskDefinitions": [
+            {
+                "type": "build",
+                "required": [
+                    "task"
+                ],
+                "properties": {
+                    "task": {
+                        "type": "string",
+                        "description": "Build Niagara Project"
+                    }
+                }
+            }
+        ],
         "configuration": {
             "type": "object",
             "title": "Niagara Settings",
