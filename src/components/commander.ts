@@ -67,7 +67,15 @@ export class Commander {
       if(rootFolder) {
 
         this.logger.showSpiningStatusItem("clean...");
-        const cmd = "gradle clean";
+        const configuration = vscode.workspace.getConfiguration("vsc-niagara");
+        const useGradleW = configuration.get("build.nx.gradlew") as boolean;
+        let cmd = ""
+        if (useGradleW) {
+          cmd = "gradlew clean";
+
+        } else {
+          cmd = "gradle clean";
+        }
         this.logger.addExtensionMessage("execute: " + cmd + " in " + rootFolder);
         let process = exec(cmd, {cwd: rootFolder});
 
