@@ -1,4 +1,8 @@
 {
+  "niagara_type": {
+    "prefix": "@type",
+    "body":["@NiagaraType"]
+  },
   "new property": {
     "prefix": "@property",
     "body": [
@@ -48,8 +52,8 @@
     "prefix": "@topic",
     "body": [
       "@NiagaraTopic(",
-      "\tname=\"${1:Name}\"",
-      "\teventType=\"${2:eventType}",
+      "\tname=\"${1:Name}\",",
+      "\teventType=\"${2:eventType}\"",
       ")"
     ]
   },
