@@ -146,7 +146,17 @@ export class Commander {
 
     if(rootFolder) {
       this.logger.showSpiningStatusItem("build TestJar...");
-      const cmd = "gradle moduleTestJar";
+
+      const configuration = vscode.workspace.getConfiguration("vsc-niagara");
+      const useGradleW = configuration.get("build.nx.gradlew") as boolean;
+      let cmd = ""
+      if (useGradleW) {
+        cmd = "gradlew moduleTestJar";
+
+      } else {
+        cmd = "gradle moduleTestJar";
+      }
+
       console.log("execute: " + cmd + " in " + rootFolder);
       let process = exec(cmd, {cwd: rootFolder});
 
