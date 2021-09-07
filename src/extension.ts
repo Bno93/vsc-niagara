@@ -75,11 +75,10 @@ export function activate(context: ExtensionContext) {
     context.subscriptions.push(window.onDidChangeActiveTextEditor(() => {
         logger.addExtensionMessage("activ editor has changed");
         manager.findProjectRoot().then((root) => {
-           logger.addExtensionMessage("found root folder: " + root);
+            logger.addExtensionMessage("found root folder: " + root);
         });
         manager.checkProjectVersion().then(() => {
             logger.addExtensionMessage("check of Niagara Version");
-
         });
     }));
 
@@ -99,8 +98,9 @@ export function deactivate() {
 
 
 class EnvPickItem implements QuickPickItem {
-    label: string;    description?: string | undefined;
-    detail?: string | undefined;
+    label: string;
+    description?: string;
+    detail?: string;
     path : string;
     constructor(label : string, path: string) {
         this.label = label;

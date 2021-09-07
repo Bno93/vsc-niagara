@@ -25,8 +25,8 @@ export class Project {
 export class Environment {
 
 
-    label : String;
-    path : String;
+    label : string;
+    path : string;
 
     constructor() {
         this.label = "";

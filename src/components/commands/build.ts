@@ -55,7 +55,7 @@ export class Build {
                     this.logger.addBuildLogMessage(data);
                   }
                 });
-              }else {
+              } else {
                 this.logger.addBuildLogMessage(trimmedData);
               }
 
@@ -65,10 +65,8 @@ export class Build {
         }
 
         if (process.stderr) {
-          // let stdErr = '';
           process.stderr.on('data', newStdErr => {
             console.log("build err: " + newStdErr.toString());
-            // stdErr += newStdErr;
             this.logger.addBuildLogMessage(newStdErr.toString());
           });
 
@@ -87,7 +85,7 @@ export class Build {
           if (isSuccessful) {
             this.logger.showSuccessStatusItem("build", build_time);
           }
-          else if(!isSuccessful){
+          else if (!isSuccessful) {
             this.logger.showFailedStatusItem("build");
           }
         });
@@ -131,7 +129,6 @@ export class Build {
               }
 
               console.log("seperated Line: " + trimmedData);
-              // stdOut += line + "\n";
               console.log("build out: " + trimmedData);
               this.logger.addBuildLogMessage(trimmedData);
 
@@ -141,10 +138,8 @@ export class Build {
         }
 
         if (process.stderr) {
-          // let stdErr = '';
           process.stderr.on('data', newStdErr => {
             console.log("build err: " + newStdErr.toString());
-            // stdErr += newStdErr;
             this.logger.addBuildLogMessage(newStdErr.toString());
           });
 
