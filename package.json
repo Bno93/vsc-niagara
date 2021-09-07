@@ -116,17 +116,17 @@
         "package": "vsce package"
     },
     "devDependencies": {
-        "@types/mocha": "^7.0.2",
-        "@types/node": "^13.11.0",
-        "tslint": "^6.1.1",
-        "typescript": "^3.8.3"
+        "@types/mocha": "^9.0.0",
+        "@types/node": "^16.7.13",
+        "tslint": "^6.1.3",
+        "typescript": "^4.4.2"
     },
     "dependencies": {
-        "@types/glob": "^7.1.1",
-        "@types/vscode": "^1.40.0",
-        "fs": "0.0.1-security",
-        "node.extend": ">=2.0.2",
+        "@types/glob": "^7.1.4",
+        "@types/vscode": "^1.50.0",
+        "fs": "^0.0.1-security",
+        "node.extend": "^2.0.2",
         "path": "^0.12.7",
-        "vscode-test": "^1.3.0"
+        "vscode-test": "^1.6.1"
     }
 }
