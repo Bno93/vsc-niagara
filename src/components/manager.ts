@@ -57,14 +57,4 @@ export class Manager {
       });
     });
   }
-
-  saveTextDocuments() {
-    let openTextDocs = vscode.workspace.textDocuments;
-
-    openTextDocs.forEach(element => {
-      if (element.isDirty) {
-        element.save();
-      }
-    });
-  }
 }
