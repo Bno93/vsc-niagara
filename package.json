@@ -2,7 +2,7 @@
     "name": "vsc-niagara",
     "displayName": "vsc-niagara",
     "description": "niagara extention for visual studio",
-    "version": "0.1.5",
+    "version": "0.1.6",
     "publisher": "bno",
     "repository": {
         "type": "git",
@@ -79,11 +79,6 @@
                     "type": "boolean",
                     "default": false,
                     "description": "Use gradlew indstead of gradle itself."
-                },
-                "vsc-niagara.build.autoSave": {
-                    "type": "boolean",
-                    "default": "false",
-                    "description": "Autosave befor run command"
                 },
                 "vsc-niagara.niagara.ax.home": {
                     "type": "string",

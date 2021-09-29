@@ -18,7 +18,6 @@ export class Build {
     let rootFolder = await this.manager.findProjectRoot() + "\\";
     let isSuccessful = false;
     this.logger.addBuildLogMessage("build Project ...");
-    this.manager.checkIfAutoSaveIsActive();
 
     const configuration = vscode.workspace.getConfiguration("vsc-niagara");
     const useGradleW = configuration.get("build.nx.gradlew") as boolean;
@@ -78,8 +77,7 @@ export class Build {
 
         process.on('exit', (exitCode, signal) => {
           // process output
-          // console.log("Out: " + stdOut);
-          // console.log("Err: " + stdErr);
+
           const now = new Date();
           let build_time = now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
           if (isSuccessful) {
@@ -108,7 +106,6 @@ export class Build {
     let isSuccessful = false;
 
     this.logger.addBuildLogMessage("build Project ...");
-    this.manager.checkIfAutoSaveIsActive();
 
     if(rootFolder) {
       this.logger.showSpiningStatusItem("build AX ...");

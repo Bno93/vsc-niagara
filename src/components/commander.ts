@@ -62,7 +62,6 @@ export class Commander {
       let rootFolder = await this.manager.findProjectRoot() + "\\";
       let isSuccessful = false;
       this.logger.addBuildLogMessage("clean project ...");
-      this.manager.checkIfAutoSaveIsActive();
 
       if(rootFolder) {
 
@@ -142,7 +141,6 @@ export class Commander {
     let rootFolder = await this.manager.findProjectRoot() + "\\";
     let isSuccessful = false;
     this.logger.addBuildLogMessage("run moduleTestJar ...");
-    this.manager.checkIfAutoSaveIsActive();
 
     if(rootFolder) {
       this.logger.showSpiningStatusItem("build TestJar...");

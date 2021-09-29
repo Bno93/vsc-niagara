@@ -19,7 +19,6 @@ export class SlotomaticWrapper {
     let rootFolder = await this.manager.findProjectRoot() + "\\";
     let isSuccessful = false;
     this.logger.addBuildLogMessage("run slot-o-matic ...");
-    this.manager.checkIfAutoSaveIsActive();
 
     const configuration = vscode.workspace.getConfiguration("vsc-niagara");
     const useGradleW = configuration.get("build.nx.gradlew") as boolean;
@@ -49,7 +48,6 @@ export class SlotomaticWrapper {
               }
             }
             console.log("seperated Line: " + trimmedData);
-            // stdOut += line + "\n";
             console.log("slot-o-matic out: " + trimmedData);
             this.logger.addBuildLogMessage(trimmedData);
 
@@ -59,7 +57,6 @@ export class SlotomaticWrapper {
         if (process.stderr) {
           process.stderr.on('data', newStdErr => {
             console.log("slot-o-matic err: " + newStdErr.toString());
-            // stdErr += newStdErr;
             this.logger.addBuildLogMessage(newStdErr.toString());
           });
 
@@ -98,7 +95,6 @@ export class SlotomaticWrapper {
     let isSuccessful = false;
 
 
-    this.manager.checkIfAutoSaveIsActive();
 
     if(rootFolder) {
       this.logger.showSpiningStatusItem("slotomatic AX ...");
@@ -119,7 +115,6 @@ export class SlotomaticWrapper {
               }
 
               console.log("seperated Line: " + trimmedData);
-              // stdOut += line + "\n";
               console.log("build out: " + trimmedData);
               this.logger.addBuildLogMessage(trimmedData);
 
@@ -130,10 +125,8 @@ export class SlotomaticWrapper {
         }
 
         if (process.stderr) {
-          // let stdErr = '';
           process.stderr.on('data', newStdErr => {
             console.log("build err: " + newStdErr.toString());
-            // stdErr += newStdErr;
             this.logger.addBuildLogMessage(newStdErr.toString());
           });
         }

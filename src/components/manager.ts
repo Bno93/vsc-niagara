@@ -58,20 +58,6 @@ export class Manager {
     });
   }
 
-
-  checkIfAutoSaveIsActive() {
-    const configuration = vscode.workspace.getConfiguration("vsc-niagara");
-    const autoSave = configuration.get("build.autoSave") as boolean;
-    console.log("is autosave on? " + autoSave);
-    if (autoSave) {
-      this.saveTextDocuments();
-    }
-    else {
-      vscode.window.showWarningMessage('WARNING: Some files may have to be merged!!');
-    }
-
-  }
-
   saveTextDocuments() {
     let openTextDocs = vscode.workspace.textDocuments;
 
