@@ -4,14 +4,11 @@ import { Logger } from './logger';
 import { Project } from './project';
 import * as path from 'path';
 
-
 export class Commander {
   logger : Logger;
   manager : Manager;
   project : Project;
   terminal?: vscode.Terminal
-
-
 
   constructor(logger : Logger, project : Project) {
     this.logger = logger;
@@ -19,7 +16,16 @@ export class Commander {
     this.project = project;
   }
 
+
   getTerminal(): vscode.Terminal {
+
+    const terminals = vscode.window.terminals;
+
+    const extensionTerminal = terminals.filter(terminal => terminal.name.indexOf("niagara") >= 0);
+
+    if (extensionTerminal.length > 0) {
+      this.terminal = extensionTerminal[0];
+    }
 
     if (!this.terminal) {
       this.terminal = vscode.window.createTerminal("niagara");
