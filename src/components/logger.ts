@@ -27,7 +27,7 @@ export class Logger {
   }
 
   addBuildLogMessage(message: string) {
-    this.buildLogPanel.append(`[${new Date().toLocaleTimeString('de-DE', {hour12: false})}] ${message}\n`);
+    this.buildLogPanel.append(`${message}\n`);
   }
 
   showSpiningStatusItem(text: string) {

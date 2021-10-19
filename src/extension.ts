@@ -18,11 +18,11 @@ import { BuildTaskProvider } from './providers/task/build';
  *
  */
 
- let buildTaskProvider: Disposable | undefined;
+let buildTaskProvider: Disposable | undefined;
 
 export function activate(context: ExtensionContext) {
     const logger = Logger.getInstance(context);
-    const project = new Project(context, logger);
+    const project = new Project(logger);
     const manager = new Manager();
     const commander = new Commander(logger, project);
     const environemnt = new EnvStatusItem();
@@ -81,9 +81,6 @@ export function activate(context: ExtensionContext) {
             logger.addExtensionMessage("check of Niagara Version");
         });
     }));
-
-
-
 }
 
 export function deactivate() {
@@ -93,8 +90,6 @@ export function deactivate() {
         buildTaskProvider.dispose();
     }
 }
-
-
 
 
 class EnvPickItem implements QuickPickItem {

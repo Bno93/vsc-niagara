@@ -1,15 +1,17 @@
 import * as vscode from 'vscode';
 import * as fs from "fs";
 
+export enum NiagaraVersion {
+  UNDEFINED = "Undefined",
+  AX = "Niagara AX",
+  N4 = "Niagara 4",
+}
 
 export class Manager {
-  axProject: boolean;
-  nxProject: boolean;
+  niagara_version: NiagaraVersion;
 
   constructor() {
-    this.axProject = false;
-    this.nxProject = false;
-
+    this.niagara_version = NiagaraVersion.UNDEFINED;
   }
 
   async findProjectRoot() : Promise<string | undefined > {
@@ -25,8 +27,6 @@ export class Manager {
     });
   }
 
-
-
   async checkProjectVersion() : Promise<string | undefined> {
     return new Promise<string | undefined>((reslove, reject) => {
       this.findProjectRoot().then((rootFolder) => {
@@ -35,23 +35,21 @@ export class Manager {
           fs.readdirSync(rootFolder).forEach(file => {
             if(file === 'build.gradle') {
               console.log("N4 project detected");
-              this.nxProject = true;
-              this.axProject = false;
 
+              this.niagara_version = NiagaraVersion.N4;
               reslove("4");
 
             }
 
             else if(file === 'build.xml') {
               console.log("N3 project detected");
-              this.nxProject = false;
-              this.axProject = true;
+              this.niagara_version = NiagaraVersion.AX;
               reslove("3");
-
             }
           });
         } else {
           console.log("rootfolder is undefined");
+          this.niagara_version = NiagaraVersion.UNDEFINED;
           reject(undefined);
         }
       });

@@ -1,217 +1,119 @@
 import * as vscode from 'vscode';
-import { exec} from 'child_process';
-import { Manager } from './manager';
+import { Manager, NiagaraVersion } from './manager';
 import { Logger } from './logger';
 import { Build } from './commands/build';
 import { SlotomaticWrapper } from "./commands/slotomatic";
 import { Project } from './project';
+import { CommandHandler } from './command_handler';
 
 
 export class Commander {
-  logger : Logger;
-  manager : Manager;
-  builder : Build;
-  slotomaticWrapper : SlotomaticWrapper;
-  project : Project;
+    logger: Logger;
+    manager: Manager;
+    builder: Build;
+    slotomaticWrapper: SlotomaticWrapper;
+    project: Project;
 
 
 
-  constructor(logger : Logger, project : Project) {
-    this.logger = logger;
-    this.manager = new Manager();
-    this.builder = new Build(this.logger, this.manager);
-    this.slotomaticWrapper = new SlotomaticWrapper(this.logger, this.manager);
-    this.project = project;
-  }
+    constructor(logger: Logger, project: Project) {
+        this.logger = logger;
+        this.manager = new Manager();
+        this.builder = new Build(this.logger, this.manager);
+        this.slotomaticWrapper = new SlotomaticWrapper(this.logger, this.manager);
+        this.project = project;
+    }
 
 
-  async build() {
-    this.manager.checkProjectVersion().then((projVersion) => {
-      this.logger.addExtensionMessage("build as a N "+ projVersion);
-      if(this.manager.nxProject) {
-        this.builder.n4();
-      }
-      else if(this.manager.axProject) {
-        this.builder.ax();
-      }
-      else {
-        this.logger.addBuildLogMessage("fail to build is ether no N3 or N4 project");
-      }
-    });
-  }
+    async build() {
+        await this.manager.checkProjectVersion();
+        this.logger.addExtensionMessage("build for " + this.manager.niagara_version);
+        switch (this.manager.niagara_version) {
+            case NiagaraVersion.N4:
+                this.builder.n4();
+                break;
+            case NiagaraVersion.AX:
+                this.builder.ax();
+                break;
+
+            default:
+                this.logger.addBuildLogMessage("fail to run build is ether no N3 or N4 project");
+                break;
+        }
+    }
 
 
-  async slotomatic() {
-    this.manager.checkProjectVersion().then((projVersion) => {
-
-
-      this.logger.addExtensionMessage("build as a N "+ projVersion);
-      if(this.manager.nxProject) {
-        this.slotomaticWrapper.n4();
-      }
-      else if(this.manager.axProject) {
-        this.slotomaticWrapper.ax();
-      }
-      else {
-        this.logger.addBuildLogMessage("fail to build is ether no N3 or N4 project");
-      }
-    });
-  }
+    async slotomatic() {
+        await this.manager.checkProjectVersion();
+        this.logger.addExtensionMessage("slotomatic for " + this.manager.niagara_version);
+        switch (this.manager.niagara_version) {
+            case NiagaraVersion.N4:
+                this.builder.n4();
+                break;
+            case NiagaraVersion.AX:
+                this.builder.ax();
+                break;
+            case NiagaraVersion.UNDEFINED:
+            default:
+                this.logger.addBuildLogMessage("fail to run slotomatic is ether no N3 or N4 project");
+                break;
+        }
+    }
 
     async clean() {
-      let rootFolder = await this.manager.findProjectRoot() + "\\";
-      let isSuccessful = false;
-      this.logger.addBuildLogMessage("clean project ...");
+        let rootFolder = await this.manager.findProjectRoot() + "\\";
+        this.logger.addBuildLogMessage("clean project ...");
 
-      if(rootFolder) {
+        if (rootFolder) {
 
-        this.logger.showSpiningStatusItem("clean...");
-        const configuration = vscode.workspace.getConfiguration("vsc-niagara");
-        const useGradleW = configuration.get("build.nx.gradlew") as boolean;
-        let cmd = ""
-        if (useGradleW) {
-          cmd = "gradlew clean";
+            this.logger.showSpiningStatusItem("clean...");
+            const configuration = vscode.workspace.getConfiguration("vsc-niagara");
+            const useGradleW = configuration.get("build.nx.gradlew") as boolean;
+            let cmd = ""
+            if (useGradleW) {
+                cmd = "gradlew clean";
 
-        } else {
-          cmd = "gradle clean";
-        }
-        this.logger.addExtensionMessage("execute: " + cmd + " in " + rootFolder);
-        let process = exec(cmd, {cwd: rootFolder});
-
-        if (process) {
-
-
-          if (process.stdout) {
-              process.stdout.on('data', newStdOut => {
-
-                let trimmedData = newStdOut.toString().trim();
-              if(trimmedData.length !== 0) {
-                if (trimmedData.match('.*BUILD SUCCESSFUL.*')) {
-                  isSuccessful = true;
-                }
-              }
-              console.log("seperated Line: " + trimmedData);
-              // stdOut += line + "\n";
-              console.log("clean out: " + trimmedData);
-              this.logger.addBuildLogMessage(trimmedData);
-
-            });
-          }
-
-          if (process.stderr) {
-
-
-            process.stderr.on('data', newStdErr => {
-              console.log("clean err: " + newStdErr.toString());
-              // stdErr += newStdErr;
-              this.logger.addBuildLogMessage(newStdErr.toString());
-            });
-
-            process.on('error', err => {
-              this.logger.addExtensionMessage("clean command failed: " + err.message);
-              vscode.window.showErrorMessage("root folder not found");
-            });
-
-          }
-          process.on('exit', (exitCode, signal) => {
-            // process output
-            // console.log("Out: " + stdOut);
-            // console.log("Err: " + stdErr);
-            if (isSuccessful) {
-              this.logger.showSuccessStatusItem("clean");
+            } else {
+                cmd = "gradle clean";
             }
-            else if(!isSuccessful){
-              this.logger.showFailedStatusItem("clean");
-            }
-          });
+            this.logger.addExtensionMessage("execute: " + cmd + " in " + rootFolder);
+            CommandHandler.runCommand(cmd, rootFolder, this.logger);
         }
-
-      }
-      else{
-        this.logger.addBuildLogMessage("root folder not found");
-        this.logger.showErrorStatusItem();
-        vscode.window.showErrorMessage("root folder not found");
-      }
+        else {
+            this.logger.addBuildLogMessage("root folder not found");
+            this.logger.showErrorStatusItem();
+            vscode.window.showErrorMessage("root folder not found");
+        }
 
     }
 
 
-  async moduleTestJar() {
+    async moduleTestJar() {
 
-    let rootFolder = await this.manager.findProjectRoot() + "\\";
-    let isSuccessful = false;
-    this.logger.addBuildLogMessage("run moduleTestJar ...");
+        let rootFolder = await this.manager.findProjectRoot() + "\\";
+        this.logger.addBuildLogMessage("run moduleTestJar ...");
 
-    if(rootFolder) {
-      this.logger.showSpiningStatusItem("build TestJar...");
+        if (rootFolder) {
+            this.logger.showSpiningStatusItem("build TestJar...");
 
-      const configuration = vscode.workspace.getConfiguration("vsc-niagara");
-      const useGradleW = configuration.get("build.nx.gradlew") as boolean;
-      let cmd = ""
-      if (useGradleW) {
-        cmd = "gradlew moduleTestJar";
+            const configuration = vscode.workspace.getConfiguration("vsc-niagara");
+            const useGradleW = configuration.get("build.nx.gradlew") as boolean;
+            let cmd = ""
+            if (useGradleW) {
+                cmd = "gradlew moduleTestJar";
 
-      } else {
-        cmd = "gradle moduleTestJar";
-      }
-
-      console.log("execute: " + cmd + " in " + rootFolder);
-      let process = exec(cmd, {cwd: rootFolder});
-
-      if (process) {
-
-        if (process.stdout) {
-          process.stdout.on('data', newStdOut => {
-
-            let trimmedData = newStdOut.toString().trim();
-            if(trimmedData.length !== 0) {
-              if (trimmedData.match('.*BUILD SUCCESSFUL.*')) {
-                isSuccessful = true;
-              }
+            } else {
+                cmd = "gradle moduleTestJar";
             }
-            console.log("seperated Line: " + trimmedData);
-            // stdOut += line + "\n";
-            console.log("build TestJar out: " + trimmedData);
-            this.logger.addBuildLogMessage(trimmedData);
 
-          });
+            console.log("execute: " + cmd + " in " + rootFolder);
+            CommandHandler.runCommand(cmd, rootFolder, this.logger);
+
         }
-
-        if (process.stderr) {
-          process.stderr.on('data', newStdErr => {
-            console.log("build TestJar err: " + newStdErr.toString());
-            // stdErr += newStdErr;
-            this.logger.addBuildLogMessage(newStdErr.toString());
-          });
+        else {
+            this.logger.addBuildLogMessage("root folder not found");
+            this.logger.showErrorStatusItem();
+            vscode.window.showErrorMessage("root folder not found");
         }
-
-        process.on('error', err => {
-          this.logger.addExtensionMessage("build TestJar command failed: " + err.message);
-          vscode.window.showErrorMessage("root folder not found");
-        });
-
-        process.on('exit', (exitCode, signal) => {
-          // process output
-          // console.log("Out: " + stdOut);
-          // console.log("Err: " + stdErr);
-          if (isSuccessful) {
-            this.logger.showSuccessStatusItem("build TestJar");
-          }
-          else if(!isSuccessful){
-            this.logger.showFailedStatusItem("build TestJar");
-          }
-        });
-      }
-
     }
-    else{
-      this.logger.addBuildLogMessage("root folder not found");
-      this.logger.showErrorStatusItem();
-      vscode.window.showErrorMessage("root folder not found");
-    }
-  }
-
-
-
-  //moduleTestJar
 }

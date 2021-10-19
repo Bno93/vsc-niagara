@@ -1,8 +1,7 @@
 
 import { Logger } from "./logger";
 
-import { ExtensionContext, workspace } from "vscode";
-
+import { workspace } from "vscode";
 
 export class Project {
 
@@ -11,9 +10,8 @@ export class Project {
     environment : Environment;
     root : string;
 
-    constructor(context: ExtensionContext, logger: Logger) {
+    constructor(logger: Logger) {
         this.logger = logger;
-
         this.version = "";
         this.root = "";
 
@@ -23,7 +21,6 @@ export class Project {
 
 
 export class Environment {
-
 
     label : string;
     path : string;
@@ -41,7 +38,7 @@ export class Environment {
         if (config_env) {
             path = config_env;
         }
-        const regexVersion = new RegExp("([0-9]+)\.([0-9]+\.)*([0-9]+)")
+        const regexVersion = /(\d+)\.(\d+\.)*(\d+)/
 
         const label = path.substring(path.lastIndexOf("\\") + 1);
         const result = label.match(regexVersion)

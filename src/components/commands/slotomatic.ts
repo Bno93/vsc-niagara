@@ -1,9 +1,8 @@
 import * as vscode from 'vscode';
 import { Manager } from "../manager";
 import { Logger } from "../logger";
-import { exec} from 'child_process';
 import * as path from 'path';
-
+import { CommandHandler } from '../command_handler';
 export class SlotomaticWrapper {
 
   manager: Manager;
@@ -17,7 +16,6 @@ export class SlotomaticWrapper {
 
   async n4() {
     let rootFolder = await this.manager.findProjectRoot() + "\\";
-    let isSuccessful = false;
     this.logger.addBuildLogMessage("run slot-o-matic ...");
 
     const configuration = vscode.workspace.getConfiguration("vsc-niagara");
@@ -34,50 +32,7 @@ export class SlotomaticWrapper {
         cmd = "gradle slotomatic";
       }
       console.log("execute: " + cmd + " in " + rootFolder);
-      let process = exec(cmd, {cwd: rootFolder});
-
-      if (process) {
-
-        if (process.stdout) {
-          process.stdout.on('data', newStdOut => {
-
-            let trimmedData = newStdOut.toString().trim();
-            if(trimmedData.length !== 0) {
-              if (trimmedData.match('.*BUILD SUCCESSFUL.*')) {
-                isSuccessful = true;
-              }
-            }
-            console.log("seperated Line: " + trimmedData);
-            console.log("slot-o-matic out: " + trimmedData);
-            this.logger.addBuildLogMessage(trimmedData);
-
-          });
-        }
-
-        if (process.stderr) {
-          process.stderr.on('data', newStdErr => {
-            console.log("slot-o-matic err: " + newStdErr.toString());
-            this.logger.addBuildLogMessage(newStdErr.toString());
-          });
-
-          process.on('error', err => {
-            this.logger.addExtensionMessage("slot-o-matic command failed: " + err.message);
-            vscode.window.showErrorMessage("root folder not found");
-          });
-        }
-
-        process.on('exit', (exitCode, signal) => {
-          // process output
-          // console.log("Out: " + stdOut);
-          // console.log("Err: " + stdErr);
-          if (isSuccessful) {
-            this.logger.showSuccessStatusItem("solotmatic N4");
-          }
-          else if(!isSuccessful){
-            this.logger.showFailedStatusItem("solotmatic N4");
-          }
-        });
-      }
+      CommandHandler.runCommand(cmd, rootFolder, this.logger);
     }
     else{
       this.logger.addBuildLogMessage("root folder not found");
@@ -92,64 +47,13 @@ export class SlotomaticWrapper {
     let rootFolder = await this.manager.findProjectRoot() + "\\";
     const configuration = vscode.workspace.getConfiguration("vsc-niagara");
     const axHome = configuration.get("niagara.ax.home") as string;
-    let isSuccessful = false;
-
-
 
     if(rootFolder) {
       this.logger.showSpiningStatusItem("slotomatic AX ...");
       let exe = path.join(axHome, "bin\\slot.exe");
       let cmd =  exe + " -mi " + rootFolder;
       this.logger.addBuildLogMessage("build: " + cmd);
-      let process = exec(cmd, {cwd: rootFolder});
-
-      if (process) {
-
-        if (process.stdout) {
-          process.stdout.on('data', newStdOut => {
-
-            let trimmedData = newStdOut.toString().trim();
-            if (trimmedData.length !== 0) {
-              if (trimmedData.match('.*Compiled.*')) {
-                isSuccessful = true;
-              }
-
-              console.log("seperated Line: " + trimmedData);
-              console.log("build out: " + trimmedData);
-              this.logger.addBuildLogMessage(trimmedData);
-
-            }
-
-          });
-
-        }
-
-        if (process.stderr) {
-          process.stderr.on('data', newStdErr => {
-            console.log("build err: " + newStdErr.toString());
-            this.logger.addBuildLogMessage(newStdErr.toString());
-          });
-        }
-
-
-        process.on('error', err => {
-          this.logger.addExtensionMessage("build command failed: " + err.message);
-          vscode.window.showErrorMessage("root folder not found");
-        });
-
-        process.on('exit', (exitCode, signal) => {
-
-          const now = new Date();
-          let build_time = now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
-          if (isSuccessful) {
-            this.logger.showSuccessStatusItem("solotmatic AX", build_time);
-          }
-          else if(!isSuccessful){
-            this.logger.showFailedStatusItem("solotmatic AX");
-          }
-        });
-
-      }
+      CommandHandler.runCommand(cmd, rootFolder, this.logger);
 
     } else {
       this.logger.addBuildLogMessage("root folder not found");
