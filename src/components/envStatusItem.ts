@@ -9,7 +9,7 @@ export class EnvStatusItem {
 
     constructor() {
         this.environItem = window.createStatusBarItem(StatusBarAlignment.Left);
-        this.environItem.command = "vsc-niagara.chooseEnvironment";
+        // this.environItem.command = "vsc-niagara.chooseEnvironment";
         this.niagaraEnv = new Environment();
     }
 

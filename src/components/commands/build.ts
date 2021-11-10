@@ -16,15 +16,16 @@ export class Build {
     this.manager = manager;
   }
 
-  async n4() {
-    let rootFolder = await this.manager.findProjectRoot() + "\\";
-    this.logger.addBuildLogMessage("build Project ...");
+  async n4(rootFolder: string) {
 
     const configuration = vscode.workspace.getConfiguration("vsc-niagara");
     const useGradleW = configuration.get("build.nx.gradlew") as boolean;
 
+    const projectName =  path.basename(rootFolder)
+    this.logger.addBuildLogMessage(`build Project: ${projectName} ...`);
+
     if(rootFolder) {
-      this.logger.showSpiningStatusItem("build N4 ...");
+      this.logger.showSpiningStatusItem(`build ${projectName} ...`);
       let cmd = "";
       if (useGradleW) {
         cmd = "gradlew build";
@@ -42,16 +43,18 @@ export class Build {
     }
   }
 
-  async ax() {
+  async ax(rootFolder: string) {
     this.logger.addBuildLogMessage("build AX Project");
-    let rootFolder = await this.manager.findProjectRoot() + "\\";
+
+    const projectName =  path.basename(rootFolder)
+
     const configuration = vscode.workspace.getConfiguration("vsc-niagara");
     const axHome = configuration.get("niagara.ax.home") as string;
 
     this.logger.addBuildLogMessage("build Project ...");
 
     if(rootFolder) {
-      this.logger.showSpiningStatusItem("build AX ...");
+      this.logger.showSpiningStatusItem(`build ${projectName} ...`);
       let exe = path.join(axHome, "bin\\build.exe");
       let cmd =  exe + " " + rootFolder + "build.xml full";
       this.logger.addBuildLogMessage("build: " + cmd);

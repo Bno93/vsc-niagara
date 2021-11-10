@@ -14,8 +14,7 @@ export class SlotomaticWrapper {
   }
 
 
-  async n4() {
-    let rootFolder = await this.manager.findProjectRoot() + "\\";
+  async n4(rootFolder: string) {
     this.logger.addBuildLogMessage("run slot-o-matic ...");
 
     const configuration = vscode.workspace.getConfiguration("vsc-niagara");
@@ -43,8 +42,7 @@ export class SlotomaticWrapper {
   }
 
 
-  async ax() {
-    let rootFolder = await this.manager.findProjectRoot() + "\\";
+  async ax(rootFolder: string) {
     const configuration = vscode.workspace.getConfiguration("vsc-niagara");
     const axHome = configuration.get("niagara.ax.home") as string;
 

@@ -1,7 +1,6 @@
 'use strict';
-import {ExtensionContext, commands, tasks, window, QuickPickItem, Disposable} from 'vscode';
+import { ExtensionContext, commands, tasks, window, Disposable } from 'vscode';
 
-import * as fs from 'fs';
 import { Manager } from './components/manager';
 import { Commander } from './components/commander';
 import { Logger } from './components/logger';
@@ -58,25 +57,11 @@ export function activate(context: ExtensionContext) {
         logger.buildLogPanel.show();
     });
 
-    commands.registerCommand("vsc-niagara.chooseEnvironment", () => {
-        const envQuickPick = window.createQuickPick();
-        const basedir = "C:\\Niagara\\";
-        fs.readdirSync(basedir).forEach(folder => {
-            logger.addExtensionMessage(folder);
-            envQuickPick.items = envQuickPick.items.concat(new EnvPickItem(folder, basedir + folder))
-        });
-
-        envQuickPick.show();
-    });
-
 
     buildTaskProvider = tasks.registerTaskProvider(BuildTaskProvider.BuildType, new BuildTaskProvider());
 
     context.subscriptions.push(window.onDidChangeActiveTextEditor(() => {
         logger.addExtensionMessage("activ editor has changed");
-        manager.findProjectRoot().then((root) => {
-            logger.addExtensionMessage("found root folder: " + root);
-        });
         manager.checkProjectVersion().then(() => {
             logger.addExtensionMessage("check of Niagara Version");
         });
@@ -88,18 +73,5 @@ export function deactivate() {
 
     if (buildTaskProvider) {
         buildTaskProvider.dispose();
-    }
-}
-
-
-class EnvPickItem implements QuickPickItem {
-    label: string;
-    description?: string;
-    detail?: string;
-    path : string;
-    constructor(label : string, path: string) {
-        this.label = label;
-        this.path = path;
-        this.detail = path;
     }
 }

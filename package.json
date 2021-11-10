@@ -2,7 +2,7 @@
     "name": "vsc-niagara",
     "displayName": "vsc-niagara",
     "description": "niagara extention for visual studio",
-    "version": "0.1.6",
+    "version": "0.2",
     "publisher": "bno",
     "repository": {
         "type": "git",
@@ -17,7 +17,10 @@
         "Snippets"
     ],
     "activationEvents": [
-        "onLanguage:java",
+        "workspaceContains:**/module-include.xml",
+        "workspaceContains:**/module-permissions.xml",
+        "workspaceContains:**/module-permissions.xml",
+        "workspaceContains:**/build.xml",
         "onCommand:vsc-niagara.build",
         "onCommand:vsc-niagara.slotomatic",
         "onCommand:vsc-niagara.clean",
@@ -83,17 +86,25 @@
                 "vsc-niagara.niagara.ax.home": {
                     "type": "string",
                     "default": "",
-                    "description": "Niagara AX Home"
+                    "description": "Niagara AX Home",
+                    "examples": ["C:/Niagara/NiagaraAX-3.8"]
                 },
                 "vsc-niagara.niagara.nx.home": {
                     "type": "string",
                     "default": "",
-                    "description": "Niagara Home"
+                    "description": "Niagara Home",
+                    "examples": ["C:/Niagara/Niagara-4.10"]
+                },
+                "vsc-niagara.niagara.basedir": {
+                    "type": "string",
+                    "default": "C:\\Niagara\\",
+                    "description": "root path of all niagara installations",
+                    "examples": ["C:\\Niagara\\"]
                 },
                 "vsc-niagara.environment": {
                     "type": "string",
                     "default": "",
-                    "description": "path the niagara environment to build the project"
+                    "description": "path of the niagara environment to build the project"
                 },
                 "vsc-niagara.log.trace": {
                     "type": "boolean",
