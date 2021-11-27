@@ -1,11 +1,13 @@
 import { Logger } from "./logger";
 import { exec } from 'child_process';
 import * as vscode from 'vscode';
+import path = require("path");
 
 export namespace CommandHandler {
     const formatText = (text: string) => `\r${text.split(/(\r?\n)/g).join("\r")}`;
     export function runCommand(command: string, rootFolder: string, logger: Logger) {
         let isSuccessful = false;
+        const project = path.basename(rootFolder);
 
         let process = exec(command, { encoding: "utf8", cwd: rootFolder });
 
@@ -42,10 +44,10 @@ export namespace CommandHandler {
 
                 let build_time = new Date().toLocaleTimeString('de-DE', { hour12: false });
                 if (isSuccessful) {
-                    logger.showSuccessStatusItem("build", build_time);
+                    logger.showSuccessStatusItem(`build ${project}`, build_time);
                 }
                 else if (!isSuccessful) {
-                    logger.showFailedStatusItem("build");
+                    logger.showFailedStatusItem(`build ${project}`);
                 }
             });
 

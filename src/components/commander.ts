@@ -30,25 +30,9 @@ export class Commander {
     async build() {
         await this.manager.checkProjectVersion();
         this.logger.addExtensionMessage("build for " + this.manager.niagara_version);
-        let rootFolder =  "";
-        let root = await this.manager.findProjectRoot();
-
-
-
-        if (Array.isArray(root)) {
-            rootFolder = await vscode.window.showQuickPick(root.map(element => {
-                const label = path.basename(element);
-                console.log(`make option wiht label:${label} and description: ${element}`);
-                return {
-                    label: '$(folder) ' + label,
-                    description: element
-                }
-            })).then(selection => {
-                return selection?.description as string;
-            });
-        }
-        else {
-            rootFolder = root as string;
+        let rootFolder =  await this.findRootFolder();
+        if (undefined == rootFolder) {
+            return;
         }
 
         if (rootFolder === undefined) {
@@ -73,15 +57,11 @@ export class Commander {
         await this.manager.checkProjectVersion();
         this.logger.addExtensionMessage("slotomatic for " + this.manager.niagara_version);
 
-        let rootFolder =  "";
-        let root = await this.manager.findProjectRoot();
+        let rootFolder =  await this.findRootFolder();
+        if (undefined == rootFolder) {
+            return;
+        }
 
-        if (Array.isArray(root)) {
-            rootFolder = await vscode.window.showQuickPick(root).then(selection => {return selection as string;});
-        }
-        else {
-            rootFolder = root as string;
-        }
         switch (this.manager.niagara_version) {
             case Niagara.NiagaraVersion.N4:
                 this.slotomaticWrapper.n4(rootFolder);
@@ -98,19 +78,9 @@ export class Commander {
 
     async clean() {
         this.logger.addBuildLogMessage("clean project ...");
-        let rootFolder =  "";
-        let root = await this.manager.findProjectRoot();
-
-        if (Array.isArray(root)) {
-            rootFolder = await vscode.window.showQuickPick(root.map(element => {
-                return {
-                    label: element.split("\\")[-1],
-                    description: element
-                }
-            })).then(selection => {return selection?.description as string;});
-        }
-        else {
-            rootFolder = root as string;
+        let rootFolder =  await this.findRootFolder();
+        if (undefined == rootFolder) {
+            return;
         }
 
         if (rootFolder) {
@@ -140,14 +110,9 @@ export class Commander {
     async moduleTestJar() {
 
         this.logger.addBuildLogMessage("run moduleTestJar ...");
-        let rootFolder =  "";
-        let root = await this.manager.findProjectRoot();
-
-        if (Array.isArray(root)) {
-            rootFolder = await vscode.window.showQuickPick(root).then(selection => {return selection as string;});
-        }
-        else {
-            rootFolder = root as string;
+        let rootFolder =  await this.findRootFolder();
+        if (undefined == rootFolder) {
+            return;
         }
 
         if (rootFolder) {
@@ -160,7 +125,7 @@ export class Commander {
                 cmd = "gradlew moduleTestJar";
 
             } else {
-                cmd = "gradle moduleTestJar";
+                cmd = "gradle moduleTestJar generalize";
             }
 
             console.log("execute: " + cmd + " in " + rootFolder);
@@ -172,5 +137,23 @@ export class Commander {
             this.logger.showErrorStatusItem();
             vscode.window.showErrorMessage("root folder not found");
         }
+    }
+
+    async findRootFolder() {
+        let root = await this.manager.findProjectRoot();
+
+        if (Array.isArray(root)) {
+            return vscode.window.showQuickPick(root.map(element => {
+                const label = path.basename(element);
+                console.log(`make option wiht label:${label} and description: ${element}`);
+                return {
+                    label: '$(folder) ' + label,
+                    description: element
+                }
+            })).then(selection => {
+                return selection?.description as string;
+            });
+        }
+        return root as string;
     }
 }
