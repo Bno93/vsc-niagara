@@ -33,6 +33,10 @@ export class Build {
         cmd = "gradle build";
       }
 
+      const extra_args: Array<string> = configuration.get("build.nx.gradle.arguments") as Array<string>;
+
+      cmd = `${cmd} ${extra_args.join(" ")}`;
+
       this.logger.addBuildLogMessage("execute: " + cmd + " in " + rootFolder);
       CommandHandler.runCommand(cmd, rootFolder, this.logger);
     }

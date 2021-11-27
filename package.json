@@ -2,7 +2,7 @@
     "name": "vsc-niagara",
     "displayName": "vsc-niagara",
     "description": "niagara extention for visual studio",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "publisher": "bno",
     "repository": {
         "type": "git",
@@ -82,6 +82,11 @@
                     "type": "boolean",
                     "default": false,
                     "description": "Use gradlew indstead of gradle itself."
+                },
+                "vsc-niagara.build.nx.gradle.arguments": {
+                    "type": "array",
+                    "default": [],
+                    "description": "List of extra arguments passed to the gradle commands."
                 },
                 "vsc-niagara.niagara.ax.home": {
                     "type": "string",
