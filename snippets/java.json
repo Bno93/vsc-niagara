@@ -58,7 +58,7 @@
     "prefix": "@naction",
     "body": [
       "@NiagaraAction(",
-      "\tname = \"${1:name}\"",
+      "\tname = \"${1:name}\",",
       "\tflags = ${2:flags}",
       ")"
     ],
