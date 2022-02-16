@@ -77,28 +77,28 @@
   "new facets": {
     "prefix": "@nfacet",
     "body": [
-      "@Facets(name = \"${1|BFacets.UNITS,BFacets.TRUE_TEXT,BFacets.FALSE_TEXT,BFacets.MIN,BFacets.MAX,BFacets.PRECISION|}\", value = \"${2:value}\" "
+      "@Facet(name = \"${1|BFacets.UNITS,BFacets.TRUE_TEXT,BFacets.FALSE_TEXT,BFacets.MIN,BFacets.MAX,BFacets.PRECISION|}\", value = \"${2:value}\")"
     ],
     "description": "inserts a generic niagara facet annotation"
   },
   "celcius unit": {
     "prefix": "@nfcelcius",
     "body": [
-      "@Facets(name = \"BFacets.UNITS}\", value = \"BUnit.getUnit(\"celsius\")\")"
+      "@Facet(name = \"BFacets.UNITS}\", value = \"BUnit.getUnit(\"celsius\")\")"
     ],
     "description": "inserts a BFacets.UNITS Ceclsius Facet annotation"
   },
   "kelvin unit": {
     "prefix": "@nfkelvin",
     "body": [
-      "@Facets(name = \"BFacets.UNITS}\", value = \"BUnit.getUnit(\"kelvin degrees\")\")"
+      "@Facet(name = \"BFacets.UNITS}\", value = \"BUnit.getUnit(\"kelvin degrees\")\")"
     ],
     "description": "inserts a BFacets.UNITS Kelvin Facet annotation"
   },
   "percentage unit": {
     "prefix": "@nfpercent",
     "body": [
-      "@Facets(name = \"BFacets.UNITS}\", value = \"BUnit.getUnit(\"percent\")\")",
+      "@Facet(name = \"BFacets.UNITS}\", value = \"BUnit.getUnit(\"percent\")\")",
       "@Facet(name = \"BFacets.PRECISION\", value = \"0\"),",
       "@Facet(name = \"BFacets.MIN\", value = \"0\"),",
       "@Facet(name = \"BFacets.MAX\", value = \"100\")"

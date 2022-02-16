@@ -2,7 +2,7 @@
     "name": "vsc-niagara",
     "displayName": "vsc-niagara",
     "description": "niagara extention for visual studio",
-    "version": "0.2.3",
+    "version": "0.2.4",
     "publisher": "bno",
     "repository": {
         "type": "git",
