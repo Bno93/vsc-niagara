@@ -25,7 +25,7 @@
       "\tname = \"${1:name}\",",
       "\ttype = \"${2:module}:${3:type}\",",
       "\tdefaultValue = \"${4:defaultValue}\",",
-      "\tflags = ${4:flags}",
+      "\tflags = ${5:flags}",
       ")"
     ],
     "description" : "inserts a empty Niagara Property"
