@@ -84,21 +84,21 @@
   "celcius unit": {
     "prefix": "@nfcelcius",
     "body": [
-      "@Facet(name = \"BFacets.UNITS}\", value = \"BUnit.getUnit(\\\"celsius\\\")\")"
+      "@Facet(name = \"BFacets.UNITS\", value = \"BUnit.getUnit(\\\"celsius\\\")\")"
     ],
     "description": "inserts a BFacets.UNITS Ceclsius Facet annotation"
   },
   "kelvin unit": {
     "prefix": "@nfkelvin",
     "body": [
-      "@Facet(name = \"BFacets.UNITS}\", value = \"BUnit.getUnit(\\\"kelvin degrees\\\")\")"
+      "@Facet(name = \"BFacets.UNITS\", value = \"BUnit.getUnit(\\\"kelvin degrees\\\")\")"
     ],
     "description": "inserts a BFacets.UNITS Kelvin Facet annotation"
   },
   "percentage unit": {
     "prefix": "@nfpercent",
     "body": [
-      "@Facet(name = \"BFacets.UNITS}\", value = \"BUnit.getUnit(\\\"percent\\\")\")",
+      "@Facet(name = \"BFacets.UNITS\", value = \"BUnit.getUnit(\\\"percent\\\")\")",
       "@Facet(name = \"BFacets.PRECISION\", value = \"0\"),",
       "@Facet(name = \"BFacets.MIN\", value = \"0\"),",
       "@Facet(name = \"BFacets.MAX\", value = \"100\")"
