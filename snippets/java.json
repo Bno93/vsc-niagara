@@ -1,105 +1,122 @@
 {
-  "niagara_type": {
-    "prefix": "@type",
+  "niagara type": {
+    "prefix": "@ntype",
     "body":["@NiagaraType"]
   },
+  "niagara singelton": {
+    "prefix": "@nsingelton",
+    "body":["@NiagaraSingleton"]
+  },
+  "niagara fozen enum": {
+    "prefix": "@nenum",
+    "description": "Niagara enum annotation",
+    "body": [
+      "@NiagaraEnum(",
+      "\trange = {",
+      "\t\t${3:range}",
+      "\t}",
+      ")"
+    ]
+  },
   "new property": {
-    "prefix": "@property",
+    "prefix": "@nproperty",
     "body": [
       "@NiagaraProperty(",
-      "\tname=\"${1:name}\",",
-      "\ttype=\"${2:module}:${3:type}\",",
-      "\tdefaultValue=\"${4:defaultValue}\",",
-      "\tflags=\"${5:flags}\"",
+      "\tname = \"${1:name}\",",
+      "\ttype = \"${2:module}:${3:type}\",",
+      "\tdefaultValue = \"${4:defaultValue}\",",
+      "\tflags = ${4:flags}",
       ")"
     ],
     "description" : "inserts a empty Niagara Property"
   },
   "out property": {
-    "prefix": "@property",
+    "prefix": "@npout",
     "body": [
       "@NiagaraProperty(",
-      "\tname=\"out\",",
-      "\ttype=\"${1:module}:${2:type}\",",
-      "\tdefaultValue=\"${3:defaultValue}\",",
-      "\tflags=\"${4:flags}\"",
+      "\tname = \"out\",",
+      "\ttype = \"${1:module}:${2:type}\",",
+      "\tdefaultValue = \"${3:defaultValue}\",",
+      "\tflags = ${4:flags}",
       ")"
     ],
     "description": "inserts a out Niagara Property"
   },
   "in property": {
-    "prefix": "@property",
+    "prefix": "@npin",
     "body": [
       "@NiagaraProperty(",
-      "\tname=\"in\",",
-      "\ttype=\"${1:module}:${2:type}\",",
-      "\tdefaultValue=\"${3:defaultValue}\",",
-      "\tflags=\"${4:flags}\"",
+      "\tname = \"in\",",
+      "\ttype = \"${1:module}:${2:type}\",",
+      "\tdefaultValue = \"${3:defaultValue}\",",
+      "\tflags = ${4:flags}",
       ")"
     ],
     "description": "inserts a in Niagara Property"
   },
   "new action": {
-    "prefix": "@action",
+    "prefix": "@naction",
     "body": [
       "@NiagaraAction(",
-      "\tname=\"${1:Name}\"",
+      "\tname = \"${1:name}\"",
+      "\tflags = ${2:flags}",
       ")"
     ],
     "description": "insert a simple Niagara Action"
   },
   "new topic": {
-    "prefix": "@topic",
+    "prefix": "@ntopic",
     "body": [
       "@NiagaraTopic(",
-      "\tname=\"${1:Name}\",",
-      "\teventType=\"${2:eventType}\"",
+      "\tname = \"${1:Name}\",",
+      "\teventType = \"${2:eventType}\"",
       ")"
+    ],
+    "description": "inserts a generic niagara topic annotation"
+  },
+  "new facets": {
+    "prefix": "@nfacet",
+    "body": [
+      "@Facets(name = \"${1|BFacets.UNITS,BFacets.TRUE_TEXT,BFacets.FALSE_TEXT,BFacets.MIN,BFacets.MAX,BFacets.PRECISION|}\", value = \"${2:value}\" "
+    ],
+    "description": "inserts a generic niagara facet annotation"
+  },
+  "celcius unit": {
+    "prefix": "@nfcelcius",
+    "body": [
+      "@Facets(name = \"BFacets.UNITS}\", value = \"BUnit.getUnit(\"celsius\")\")"
+    ],
+    "description": "inserts a BFacets.UNITS Ceclsius Facet annotation"
+  },
+  "kelvin unit": {
+    "prefix": "@nfkelvin",
+    "body": [
+      "@Facets(name = \"BFacets.UNITS}\", value = \"BUnit.getUnit(\"kelvin degrees\")\")"
+    ],
+    "description": "inserts a BFacets.UNITS Kelvin Facet annotation"
+  },
+  "percentage unit": {
+    "prefix": "@nfpercent",
+    "body": [
+      "@Facets(name = \"BFacets.UNITS}\", value = \"BUnit.getUnit(\"percent\")\")",
+      "@Facet(name = \"BFacets.PRECISION\", value = \"0\"),",
+      "@Facet(name = \"BFacets.MIN\", value = \"0\"),",
+      "@Facet(name = \"BFacets.MAX\", value = \"100\")"
+    ],
+    "description": "inserts a BFacets.UNITS Ceclsius Facet annotation"
+  },
+  "generic enum range": {
+    "prefix": "@nragne",
+    "description": "inserts a generic Niagara enum range",
+    "body": [
+      "@Range($1)"
     ]
   },
-  "niagara class": {
-    "prefix": "class",
-    "description": "Class with Niagara Type",
+  "name & value range": {
+    "prefix": "@nragne",
+    "description": "inserts a name & value Niagara enum range",
     "body": [
-      "package ;",
-      "",
-      "import javax.baja.nre.annotations.NiagaraType;",
-      "import javax.baja.sys.BComponent;",
-      "import javax.baja.sys.Sys;",
-      "import javax.baja.sys.Type;",
-      "",
-      "@NiagaraType",
-      "public class $TM_FILENAME_BASE extends ${2:BComponent} {",
-      "\t$0",
-      "}"
-    ]
-  },
-
-  "niagara fozen enum": {
-    "prefix": "enum",
-    "description": "Class with Niagara Type",
-    "body": [
-      "package ;",
-      "",
-      "import javax.baja.nre.annotations.NiagaraEnum;",
-      "import javax.baja.nre.annotations.NiagaraType;",
-      "import javax.baja.nre.annotations.Range;",
-      "import javax.baja.sys.BFrozenEnum;",
-      "import javax.baja.sys.Sys;",
-      "import javax.baja.sys.Type;",
-      "",
-      "@NiagaraEnum(",
-      "\trange = {",
-      "\t\t@Range(value=$3)",
-      "",
-      "\t}",
-      ")",
-      "",
-      "@NiagaraType",
-      "public final class $TM_FILENAME_BASE extends ${2:BFrozenEnum} {",
-      "\t$0",
-      "}"
+      "@Range(ordinal = $1, value = \"${2:value}\")"
     ]
   }
-
 }
