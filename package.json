@@ -2,7 +2,7 @@
     "name": "vsc-niagara",
     "displayName": "vsc-niagara",
     "description": "niagara extention for visual studio",
-    "version": "0.2.5",
+    "version": "0.2.6",
     "publisher": "bno",
     "repository": {
         "type": "git",
@@ -32,6 +32,10 @@
             {
                 "language": "java",
                 "path": "./snippets/java.json"
+            },
+            {
+                "language": "javascript",
+                "path": "./snippets/javascript.json"
             },
             {
                 "language": "xml",

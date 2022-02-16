@@ -1,0 +1,42 @@
+{
+    "bajaux widget": {
+        "prefix": "uxwidget",
+        "description": "create a niagara ux widget",
+        "body": [
+            "define(function(require){",
+            "\t'use strict;'",
+            "",
+            "\tvar baja = require('baja!');",
+            "\tvar Widget = require('bajaux/Widget');",
+            "\tvar subscriberMixIn = require('bajaux/mixin/subscriberMixIn');",
+            "",
+            "\tvar $1 = function() {",
+            "\t\tWidget.apply(this, arguments);",
+            "\t\tsubscriberMixIn(this);",
+            "\t};",
+            "",
+            "",
+            "\t$1.prototype = Object.create(Widget.prototype);",
+            "\t$1.prototype.constructor = $1;",
+            "",
+            "",
+            "\t$1.prototype.doInitialize = function(dom) {",
+            "\t\t//TODO: implement the components initialization",
+            "\t};",
+            "",
+            "",
+            "\t$1.prototype.doLoad = function(comp) {",
+            "\t\t//TODO: implement the components loading",
+            "\t};",
+            "",
+            "",
+            "\t$1.prototype.doChanged = function(name, value) {",
+            "\t\t//TODO: implement the components changed",
+            "\t};",
+            "",
+            "",
+            "\treturn $1",
+            "});"
+        ]
+    }
+}
