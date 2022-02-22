@@ -4,7 +4,7 @@
         "description": "create a niagara ux widget",
         "body": [
             "define(function(require){",
-            "\t'use strict;'",
+            "\t'use strict';",
             "",
             "\tvar baja = require('baja!');",
             "\tvar Widget = require('bajaux/Widget');",
@@ -35,7 +35,7 @@
             "\t};",
             "",
             "",
-            "\treturn $1",
+            "\treturn $1;",
             "});"
         ]
     }
