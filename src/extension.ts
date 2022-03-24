@@ -1,5 +1,5 @@
 'use strict';
-import { ExtensionContext, commands, tasks, window, Disposable } from 'vscode';
+import { ExtensionContext, commands, tasks, window, Disposable, languages } from 'vscode';
 
 import { Manager } from './components/manager';
 import { Commander } from './components/commander';
@@ -7,7 +7,7 @@ import { Logger } from './components/logger';
 import { EnvStatusItem } from './components/envStatusItem';
 import { Project } from './components/project';
 import { BuildTaskProvider } from './providers/task/build';
-
+import { checkDocument } from './handler/diagnostic_handler';
 
 /*
  * TODO:
@@ -25,6 +25,7 @@ export function activate(context: ExtensionContext) {
     const manager = new Manager();
     const commander = new Commander(logger, project);
     const environemnt = new EnvStatusItem();
+    const collection = languages.createDiagnosticCollection('vsc-niagara');
 
     logger.addExtensionMessage("vsc-niagara activated");
 
@@ -37,7 +38,6 @@ export function activate(context: ExtensionContext) {
             logger.addExtensionMessage("couldn't fond version [" + version + "]" );
         }
     });
-
 
     commands.registerCommand("vsc-niagara.build", () => {
         logger.addExtensionMessage("execute build action");
@@ -60,8 +60,14 @@ export function activate(context: ExtensionContext) {
 
     buildTaskProvider = tasks.registerTaskProvider(BuildTaskProvider.BuildType, new BuildTaskProvider());
 
-    context.subscriptions.push(window.onDidChangeActiveTextEditor(() => {
-        logger.addExtensionMessage("activ editor has changed");
+
+    context.subscriptions.push(window.onDidChangeActiveTextEditor(editor => {
+
+        if (editor) {
+            checkDocument(editor.document, collection);
+        }
+
+        logger.addExtensionMessage("active editor has changed");
         manager.checkProjectVersion().then(() => {
             logger.addExtensionMessage("check of Niagara Version");
         });

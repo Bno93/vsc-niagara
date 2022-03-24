@@ -96,19 +96,25 @@
                     "type": "string",
                     "default": "",
                     "description": "Niagara AX Home",
-                    "examples": ["C:/Niagara/NiagaraAX-3.8"]
+                    "examples": [
+                        "C:/Niagara/NiagaraAX-3.8"
+                    ]
                 },
                 "vsc-niagara.niagara.nx.home": {
                     "type": "string",
                     "default": "",
                     "description": "Niagara Home",
-                    "examples": ["C:/Niagara/Niagara-4.10"]
+                    "examples": [
+                        "C:/Niagara/Niagara-4.10"
+                    ]
                 },
                 "vsc-niagara.niagara.basedir": {
                     "type": "string",
                     "default": "C:\\Niagara\\",
                     "description": "root path of all niagara installations",
-                    "examples": ["C:\\Niagara\\"]
+                    "examples": [
+                        "C:\\Niagara\\"
+                    ]
                 },
                 "vsc-niagara.environment": {
                     "type": "string",
@@ -142,6 +148,7 @@
         "fs": "^0.0.1-security",
         "node.extend": "^2.0.2",
         "path": "^0.12.7",
-        "vscode-test": "^1.6.1"
+        "vscode-test": "^1.6.1",
+        "fast-xml-parser": "^4.0"
     }
 }
