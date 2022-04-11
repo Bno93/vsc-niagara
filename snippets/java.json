@@ -118,5 +118,15 @@
     "body": [
       "@Range(ordinal = $1, value = \"${2:value}\")"
     ]
+  },
+  "Unittest": {
+    "prefix" : "@ntest",
+    "description": "create unittest method",
+    "body": [
+      "@Test",
+      "public void $1() {",
+      "\t$2",
+      "}"
+    ]
   }
 }
